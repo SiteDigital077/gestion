@@ -1,22 +1,14 @@
 {
-    "name": "digitalsite/gestion",
-    "description": "Modulo para la Gestión Comercial",
+    "name": "digitalsitesaas/gestion",
+    "description": "Módulo gestión",
+    "type": "project",
     "license": "MIT",
     "authors": [
         {
-            "name": "Sitedigital",
-            "email": "info@sitedigital.com.co"
+            "name": "SiteDigital",
+            "email": "admin@sitedigital.com.co"
         }
     ],
-    "autoload": {
-
-        "psr-4": {
-            "Digitalsite\\Gestion\\": "src/"
-        }
-
-    },
     "minimum-stability": "dev",
-    "require": {
-        "illuminate/support": "~5"
-    }
+    "require": {}
 }
