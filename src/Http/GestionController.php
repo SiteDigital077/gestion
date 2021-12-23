@@ -25,6 +25,10 @@ class GestionController extends Controller
  }
 
  public function create() {
+  $interes = Input::get('interes');
+  $data = json_encode($interes, true);
+  $vowels = array('"', '[', ']');
+  $onlyconsonants = str_replace($vowels, '', $data);
   $gestion = new Gestion;
   $gestion->nombre = Input::get('nombre');
   $gestion->apellido = Input::get('apellido');
@@ -34,7 +38,7 @@ class GestionController extends Controller
   $gestion->nit = Input::get('nit');
   $gestion->email = Input:: get ('email');
   $gestion->numero = Input:: get ('numero');
-  $gestion->interes = Input:: get ('interes');
+  $gestion->interes = $onlyconsonants;
   $gestion->sector_id = Input:: get ('sector');
   $gestion->cantidad_id = Input:: get ('cantidad');
   $gestion->referido_id = Input:: get ('referido');

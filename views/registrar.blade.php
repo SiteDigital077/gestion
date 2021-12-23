@@ -44,6 +44,18 @@
     {{ Form::open(array('method' => 'POST','class' => 'form-horizontal','id' => 'defaultForm', 'url' => array('gestion/registrar/usuario'))) }}
 
     <div class="form-group">
+     <label class="col-md-3 control-label" for="example-text-input">Tipo usuario</label>
+      <div class="col-md-9">
+      {{ Form::select('tipo', [
+      '1' => 'Contacto',
+      '2' => 'Prospecto',
+      '3' => 'Cliente'
+      ], null, array('class' => 'form-control')) }}
+      </div>
+    </div>
+
+
+    <div class="form-group">
      <label class="col-md-3 control-label" for="example-text-input">Nombre</label>
       <div class="col-md-9">
        {{Form::text('nombre', '', array('class' => 'form-control','placeholder'=>'Ingrese nombre'))}}
@@ -120,17 +132,19 @@
 
 
 
-     <div class="form-group">
-     <label class="col-md-3 control-label" for="example-select">Producto de intéres</label>
-      <div class="col-md-9">
-       <select name="interes" id="inputConcepto" class="form-control">
-        <option value="" disabled selected>Seleccione Producto de Intéres</option>
-         @foreach($productos as $productos)
+
+
+    <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Producto de intéres</label>
+                                            <div class="col-md-9">
+                                                <div id="output"></div>
+                                                <select multiple="multiple" data-placeholder="Seleccione roles..." name="interes[]" multiple class="chosen-select form-control" id="interes">
+                                                 @foreach($productos as $productos)
           <option value="{{$productos->id}}">{{$productos->producto}}</option>
          @endforeach
-       </select>
-      </div>
-    </div>
+                                                </select>
+                                            </div>
+                                        </div>
 
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-select">Sector</label>
@@ -175,6 +189,7 @@
       </div>
     </div>
 
+
     <div class="form-group form-actions">
      <div class="col-md-9 col-md-offset-3">
       <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Crear</button>
@@ -196,6 +211,16 @@
  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
  {{ Html::script('modulo-gestion/validaciones/crear-usuario.js') }}
  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }} 
+
+
+     <script src="//harvesthq.github.io/chosen/chosen.jquery.js"></script>
+
+  <script type="text/javascript"></script>
+    <script type="text/javascript">
+document.getElementById('output').innerHTML = location.search;
+$(".chosen-select").chosen();
+</script>
+
 
   <script type="text/javascript">
      
