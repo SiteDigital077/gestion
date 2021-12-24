@@ -46,13 +46,17 @@ class GestionController extends Controller
   $gestion->pais_id = Input:: get ('pais');
   $gestion->ciudad_id = Input:: get ('ciudad');
   $gestion->save();
-  Mail::to(Input::get('email'))
+  /*Mail::to(Input::get('email'))
   ->bcc('pruebas@hotmail.com')
-  ->send(new Productos($gestion->slug));
+  ->send(new Productos($gestion->slug));*/
   return Redirect('/gestion/comercial')->with('status', 'ok_create');
  }
 
 public function editarusuario($id){
+  $interes = Input::get('interes');
+  $data = json_encode($interes, true);
+  $vowels = array('"', '[', ']');
+  $onlyconsonants = str_replace($vowels, '', $data);
   $gestion = Gestion::find($id);
   $gestion->nombre = Input::get('nombre');
   $gestion->apellido = Input::get('apellido');
@@ -61,7 +65,7 @@ public function editarusuario($id){
   $gestion->nit = Input::get('nit');
   $gestion->email = Input:: get ('email');
   $gestion->numero = Input:: get ('numero');
-  $gestion->interes = Input:: get ('interes');
+  $gestion->interes = $onlyconsonants;
   $gestion->sector_id = Input:: get ('sector');
   $gestion->cantidad_id = Input:: get ('cantidad');
   $gestion->referido_id = Input:: get ('referido');

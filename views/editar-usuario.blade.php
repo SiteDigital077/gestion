@@ -1,3 +1,5 @@
+
+
 @extends ('adminsite.layout')
 
 @section('cabecera')
@@ -38,11 +40,22 @@
     <div class="block-title">
      <div class="block-options pull-right">
      </div>
-     <h2><strong>Editar</strong> usuario</h2>
+     <h2><strong>Crear</strong> usuario</h2>
     </div>
     @foreach($usuario as $usuario)
-  
     {{ Form::open(array('method' => 'POST','class' => 'form-horizontal','id' => 'defaultForm', 'url' => array('gestion/comercial/editarusuario',Request::segment(4)))) }}
+
+    <div class="form-group">
+     <label class="col-md-3 control-label" for="example-text-input">Tipo usuario</label>
+      <div class="col-md-9">
+      {{ Form::select('tipo', [
+      '1' => 'Contacto',
+      '2' => 'Prospecto',
+      '3' => 'Cliente'
+      ], null, array('class' => 'form-control')) }}
+      </div>
+    </div>
+
 
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-text-input">Nombre</label>
@@ -66,9 +79,9 @@
     </div>
 
     <div class="form-group">
-     <label class="col-md-3 control-label" for="example-email-input">Dirección</label>
+     <label class="col-md-3 control-label" for="example-password-input">Dirección</label>
       <div class="col-md-9">
-       {{Form::text('direccion', $usuario->direccion, array('class' => 'form-control','placeholder'=>'Ingrese direccion'))}}
+       {{Form::text('direccion', $usuario->direccion, array('class' => 'form-control','placeholder'=>'Ingrese dirección'))}}
       </div>
     </div>
 
@@ -93,7 +106,8 @@
       </div>
     </div>
 
-         <div class="form-group">
+      
+                              <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-select">Pais</label>
                                             <div class="col-md-9">
                                                <select id="pais" name="pais" class="form-control" size="1">
@@ -115,19 +129,32 @@
                                             </div>
                                         </div>
 
-     <div class="form-group">
-     <label class="col-md-3 control-label" for="example-select">Producto de intéres</label>
-      <div class="col-md-9">
-       <select name="interes" id="inputConcepto" class="form-control">
-        <option value="{{$usuario->interes}}">{{$usuario->producto}}</option>
-         @foreach($productos as $productos)
-          <option value="{{$productos->id}}">{{$productos->producto}}</option>
-         @endforeach
-       </select>
-      </div>
-    </div>
+
+
+
+
 
     <div class="form-group">
+     <label class="col-md-3 control-label" for="example-text-input">Producto de intéres</label>
+      <div class="col-md-9">
+       <div id="output"></div>
+        <select multiple="multiple" data-placeholder="Seleccione roles..." name="interes[]" multiple class="chosen-select form-control" id="interes">
+         @foreach($productosa as $producto)
+          <option value="{{$producto->id}}" selected>{{$producto->producto}}</option>
+         @endforeach
+
+         @foreach($productos as $productose)
+         
+        
+          <option value="{{$productose->id}}">{{$productose->producto}}</option>
+       
+          
+         @endforeach
+        </select>
+       </div>
+      </div>
+
+   <div class="form-group">
      <label class="col-md-3 control-label" for="example-select">Sector</label>
       <div class="col-md-9">
        <select name="sector" id="inputConcepto" class="form-control">
@@ -170,16 +197,16 @@
       </div>
     </div>
 
+
     <div class="form-group form-actions">
      <div class="col-md-9 col-md-offset-3">
-      <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Editar</button>
+      <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Crear</button>
       <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Cancelar</button>
      </div>
     </div>
     
     {{ Form::close() }}
-    
-    @endforeach                      
+      @endforeach                          
    </div>
   </div>
  </div>
@@ -187,9 +214,22 @@
 
 
 <footer>
+
+
  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
  {{ Html::script('modulo-gestion/validaciones/crear-usuario.js') }}
  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }} 
+
+
+     <script src="//harvesthq.github.io/chosen/chosen.jquery.js"></script>
+
+  <script type="text/javascript"></script>
+    <script type="text/javascript">
+document.getElementById('output').innerHTML = location.search;
+$(".chosen-select").chosen();
+</script>
+
+
   <script type="text/javascript">
      
       $('#pais').on('change',function(e){

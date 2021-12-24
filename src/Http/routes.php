@@ -70,12 +70,20 @@ Route::get('gestion/comercial/editar-recepcion/{id}', function($id){
  ->leftjoin('paises', 'paises.id', '=', 'gestion_usuarios.pais_id')
  ->leftjoin('departamentos', 'departamentos.id', '=', 'gestion_usuarios.ciudad_id')
  ->where('gestion_usuarios.id', '=', $id)->get();
- $productos = DB::table('gestion_productos')->get();
+ 
  $sectores = DB::table('gestion_sector')->get();
  $referidos = DB::table('gestion_referidos')->get();
  $cantidades = DB::table('gestion_cantidad')->get();
  $paises = DB::table('paises')->orderBy('pais', 'ASC')->get();
- return View::make('gestion::editar-usuario')->with('usuario', $usuario)->with('productos', $productos)->with('sectores', $sectores)->with('referidos', $referidos)->with('cantidades', $cantidades)->with('paises', $paises);
+ $intereses = DB::table('gestion_usuarios')->where('id','=',$id)->get();
+ foreach ($intereses as $interes){
+  $ideman = $interes->interes;
+  $id_str = explode(',', $ideman);
+  $productosa = DB::table('gestion_productos')->whereIn('id', $id_str)->get();
+  $productos = DB::table('gestion_productos')->whereNotIn('id',$id_str)->get();
+ 
+ }
+ return View::make('gestion::editar-usuario')->with('usuario', $usuario)->with('productos', $productos)->with('productosa', $productosa)->with('sectores', $sectores)->with('id_str', $id_str)->with('referidos', $referidos)->with('cantidades', $cantidades)->with('paises', $paises);
 });
 
 
