@@ -96,6 +96,7 @@ public function editarusuario($id){
   $gestion->apellido = Input::get('apellido');
   $gestion->empresa = Input::get('empresa');
   $gestion->direccion = Input::get('direccion');
+  $gestion->slug = Str::slug($gestion->empresa);
   $gestion->nit = Input::get('nit');
   $gestion->email = Input:: get ('email');
   $gestion->numero = Input:: get ('numero');
