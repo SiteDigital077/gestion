@@ -8,85 +8,23 @@ Route::get('gestion/crear-pais', function(){
 Route::post('gestion/crearpais', 'DigitalsiteSaaS\Pagina\Http\ConfiguracionController@crearpais'); 
 Route::post('gestion/actualizarpais', 'DigitalsiteSaaS\Pagina\Http\ConfiguracionController@crearpais'); 
 
-Route::get('gestion/comercial/registro', function(){
- $productos = DB::table('gestion_productos')->get();
- $sectores = DB::table('gestion_sector')->get();
- $referidos = DB::table('gestion_referidos')->get();
- $cantidades = DB::table('gestion_cantidad')->get();
- $paises = DB::table('paises')->orderBy('pais', 'ASC')->get();
- return View::make('gestion::registrar')->with('productos', $productos)->with('sectores', $sectores)->with('referidos', $referidos)->with('cantidades', $cantidades)->with('paises', $paises);
-});
+Route::get('gestion/comercial/registro', 'DigitalsiteSaaS\Gestion\Http\GestionController@registro');
 
-Route::get('gestion/comercial/editar/{id}', function($id){
- $usuarios = DB::table('gestion_usuarios')
- ->join('gestion_productos','gestion_usuarios.interes','=','gestion_productos.id')
- ->join('gestion_sector','gestion_usuarios.sector','=','gestion_sector.id')
- ->where('gestion_usuarios.id', '=', $id)->get();
- $productos = DB::table('gestion_productos')->get();
- $sectores = DB::table('gestion_sector')->get();
- return View::make('gestion::editar-registro')->with('productos', $productos)->with('sectores', $sectores)->with('usuarios', $usuarios);
-});
+Route::get('gestion/comercial/editar/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@edito');
+
+Route::get('gestion/comercial/editar-cantidades/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarcan');
+
+Route::get('portafolio/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@portafolio');
 
 
-Route::get('gestion/comercial/editar-cantidades/{id}', function($id){
- $cantidad = DB::table('gestion_cantidad')->where('id', '=', $id)->get();
- return View::make('gestion::editar-cantidad')->with('cantidad', $cantidad);
-});
-
-Route::get('portafolio/{id}', function ($id) {
-
-$empresa = DB::table('gestion_usuarios')->where('slug','=',$id)->get();
-
-      return view('gestion::portafolio', compact('empresa'));
+Route::get('gestion/comercial/editar-referido/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editreferido');
 
 
-});
+Route::get('gestion/comercial/editar-sector/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editsector');
 
+Route::get('gestion/comercial/editar-producto/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editproducto');
 
-
-
-Route::get('gestion/comercial/editar-referido/{id}', function($id){
- $referido = DB::table('gestion_referidos')->where('id', '=', $id)->get();
- return View::make('gestion::editar-referido')->with('referido', $referido);
-});
-
-Route::get('gestion/comercial/editar-sector/{id}', function($id){
- $sector = DB::table('gestion_sector')->where('id', '=', $id)->get();
- return View::make('gestion::editar-sector')->with('sector', $sector);
-});
-
-Route::get('gestion/comercial/editar-producto/{id}', function($id){
- $producto = DB::table('gestion_productos')->where('id', '=', $id)->get();
- return View::make('gestion::editar-producto')->with('producto', $producto);
-});
-
-
-Route::get('gestion/comercial/editar-recepcion/{id}', function($id){
- $usuario = DB::table('gestion_usuarios')
- ->join('gestion_cantidad', 'gestion_cantidad.id', '=', 'gestion_usuarios.cantidad_id')
- ->join('gestion_referidos', 'gestion_referidos.id', '=', 'gestion_usuarios.referido_id')
- ->join('gestion_sector', 'gestion_sector.id', '=', 'gestion_usuarios.sector_id')
- ->join('gestion_productos', 'gestion_productos.id', '=', 'gestion_usuarios.interes')
- ->leftjoin('paises', 'paises.id', '=', 'gestion_usuarios.pais_id')
- ->leftjoin('departamentos', 'departamentos.id', '=', 'gestion_usuarios.ciudad_id')
- ->where('gestion_usuarios.id', '=', $id)->get();
- 
- $sectores = DB::table('gestion_sector')->get();
- $referidos = DB::table('gestion_referidos')->get();
- $cantidades = DB::table('gestion_cantidad')->get();
- $paises = DB::table('paises')->orderBy('pais', 'ASC')->get();
- $intereses = DB::table('gestion_usuarios')->where('id','=',$id)->get();
- foreach ($intereses as $interes){
-  $ideman = $interes->interes;
-  $id_str = explode(',', $ideman);
-  $productosa = DB::table('gestion_productos')->whereIn('id', $id_str)->get();
-  $productos = DB::table('gestion_productos')->whereNotIn('id',$id_str)->get();
- 
- }
- return View::make('gestion::editar-usuario')->with('usuario', $usuario)->with('productos', $productos)->with('productosa', $productosa)->with('sectores', $sectores)->with('id_str', $id_str)->with('referidos', $referidos)->with('cantidades', $cantidades)->with('paises', $paises);
-});
-
-
+Route::get('gestion/comercial/editar-recepcion/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editrecepcion');
 
 Route::post('gestion/comercial/editarcantidad/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarcantidad');
 Route::post('gestion/comercial/editarreferido/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarreferido');
@@ -118,22 +56,12 @@ Route::resource('gestion/comercial', 'DigitalsiteSaaS\Gestion\Http\GestionContro
 });
 
 
-Route::get('/validacion/nit', function () {
-          $user = DB::table('gestion_usuarios')->where('nit', Input::get('nit'))->count();
-    if($user > 0) {
-        $isAvailable = FALSE;
-    } else {
-        $isAvailable = TRUE;
-    }
-    echo json_encode(
-            array(
-                'valid' => $isAvailable
-            )); 
+Route::get('/validacion/nit', 'DigitalsiteSaaS\Gestion\Http\GestionController@valida');
 
-});
 
 Route::group(['middleware' => ['auths','recepcion']], function (){
 Route::get('gestion/comercial-recepcion', 'DigitalsiteSaaS\Gestion\Http\GestionController@recepcion');
+
 Route::get('gestion/registro-recepcion', function(){
  $productos = DB::table('gestion_productos')->get();
  $sectores = DB::table('gestion_sector')->get();
@@ -142,7 +70,9 @@ Route::get('gestion/registro-recepcion', function(){
   $paises = DB::table('paises')->orderBy('pais', 'ASC')->get();
  return View::make('gestion::registro-recepcion')->with('productos', $productos)->with('sectores', $sectores)->with('referidos', $referidos)->with('cantidades', $cantidades)->with('paises', $paises);
 });
+
 Route::post('gestion/usuariorecepcion', 'DigitalsiteSaaS\Gestion\Http\GestionController@createrecepcion');
+
 Route::get('gestion/comercial/editar-registrorec/{id}', function($id){
  $usuario = DB::table('gestion_usuarios')
  ->join('gestion_productos','gestion_usuarios.interes','=','gestion_productos.id')
