@@ -209,11 +209,10 @@
 
 
  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
- {{ Html::script('modulo-gestion/validaciones/crear-usuario.js') }}
+ <script src="//harvesthq.github.io/chosen/chosen.jquery.js"></script>
  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }} 
+{{ Html::script('/modulo-gestion/validaciones/crear-usuario.js') }}
 
-
-     <script src="//harvesthq.github.io/chosen/chosen.jquery.js"></script>
 
   <script type="text/javascript"></script>
     <script type="text/javascript">
