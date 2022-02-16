@@ -5,7 +5,7 @@
  @stop
 
 @section('ContenidoSite-01')
-
+<h1>Hola</h1>
 <div class="content-header">
  <ul class="nav-horizontal text-center">
   <li class="active">
