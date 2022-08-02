@@ -68,6 +68,7 @@
      <tr>
       <th class="text-center">Nombres y Apellidos</th>
       <th class="text-center">Empresa</th>
+      <th class="text-center">Estado</th>
       <th class="text-center">Email</th>
       <th class="text-center">Intéres</th>
       <th class="text-center">Sector</th>
@@ -83,7 +84,13 @@
        <td class="text-center">{{$usuariosa->nombre}} {{$usuariosa->apellido}}</td>
        
        <td class="text-center">{{$usuariosa->empresa}}</td>
-       
+       @if($usuariosa->tipo == '1')
+       <td class="text-center"> <span class="badge label-info">Contacto</span></td>
+       @elseif($usuariosa->tipo == '2')
+       <td class="text-center"> <span class="badge label-warning">En Proceso</span></td>
+       @elseif($usuariosa->tipo == '3')
+       <td class="text-center"> <span class="badge label-success">Ganado</span></td>
+       @endif
        <td>{{$usuariosa->email}}</td>
       
        @foreach($productos as $productosa)
@@ -101,6 +108,8 @@
        <td>{{$usuariosa->created_at}}</td>
        <td class="text-center">
 
+        
+
         <a href="<?=URL::to('gestion/comercial/editar-recepcion/');?>/{{$usuariosa->id}}"><span  id="tip" data-toggle="tooltip" data-placement="left" title="Editar usuario" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>
 
        <script language="JavaScript">
@@ -108,7 +117,9 @@
 		    return confirm( mensaje );}
 	      </script>
 
-       <a href="<?=URL::to('gestion/comercial/eliminar');?>/{{$usuariosa->id}}" onclick="return confirmar('¿Está seguro que desea eliminar el registro?')"><span id="tup" data-toggle="tooltip" data-placement="right" title="Eliminar usuario" class="btn btn-danger" disabled="true"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
+       <a href="<?=URL::to('gestion/comercial/eliminar');?>/{{$usuariosa->id}}" onclick="return confirmar('¿Está seguro que desea eliminar el registro?')"><span id="tup" data-toggle="tooltip" data-placement="top" title="Eliminar usuario" class="btn btn-danger" disabled="true"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
+
+       <a href="<?=URL::to('/portafolio');?>/{{$usuariosa->slug}}"><span  id="tip" data-toggle="tooltip" data-placement="right" title="Ver Portafolio" class="btn btn-warning"><i class="fa fa-book sidebar-nav-icon"></i></span></a>
        </td>
       </tr>
       @endforeach

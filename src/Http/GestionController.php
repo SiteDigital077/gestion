@@ -18,6 +18,7 @@ use Hyn\Tenancy\Models\Hostname;
 use Hyn\Tenancy\Models\Website;
 use Hyn\Tenancy\Repositories\HostnameRepository;
 use Hyn\Tenancy\Repositories\WebsiteRepository;
+use DigitalsiteSaaS\Carrito\Pais;
 
 class GestionController extends Controller
 {
@@ -60,6 +61,8 @@ $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
   }else{
   $gestion = new \DigitalsiteSaaS\Gestion\Tenant\Gestion;  
   }
+  $gestion->tipo = Input::get('tipo');
+  $gestion->fecha = Input::get('fecha');
   $gestion->nombre = Input::get('nombre');
   $gestion->apellido = Input::get('apellido');
   $gestion->empresa = Input::get('empresa');
@@ -92,6 +95,8 @@ public function editarusuario($id){
   }else{
   $gestion = \DigitalsiteSaaS\Gestion\Tenant\Gestion::find($id); 
   }
+  $gestion->tipo = Input::get('tipo');
+  $gestion->fecha = Input::get('fecha');
   $gestion->nombre = Input::get('nombre');
   $gestion->apellido = Input::get('apellido');
   $gestion->empresa = Input::get('empresa');
@@ -242,13 +247,13 @@ public function crearreferido() {
  $sectores = Sector::all();
  $referidos = Referido::all();
  $cantidades = Cantidad::all();
- $paises = DB::table('paises')->orderBy('pais', 'ASC')->get();
+ $paises = Pais::orderBy('pais', 'ASC')->get();
 }else{
 $productos = \DigitalsiteSaaS\Gestion\Tenant\Producto::all();
  $sectores = \DigitalsiteSaaS\Gestion\Tenant\Sector::all();
  $referidos = \DigitalsiteSaaS\Gestion\Tenant\Referido::all();
  $cantidades = \DigitalsiteSaaS\Gestion\Tenant\Cantidad::all();
- $paises = DB::table('paises')->orderBy('pais', 'ASC')->get();
+ $paises = \DigitalsiteSaaS\Carrito\Tenant\Pais::orderBy('pais', 'ASC')->get();
 
 }
  return view('gestion::registrar')->with('productos', $productos)->with('sectores', $sectores)->with('referidos', $referidos)->with('cantidades', $cantidades)->with('paises', $paises);

@@ -2,6 +2,7 @@
 
 @section('cabecera')
     @parent
+      {{ Html::style('modulo-calendario/css/bootstrap-datetimepicker.min.css') }}
      {{ Html::style('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css') }}
     @stop
 
@@ -54,6 +55,12 @@
       </div>
     </div>
 
+<div class="form-group">
+         <label class="col-md-3 control-label" for="example-email-input">Fecha Inicio</label>
+          <div class="col-md-9 date" id="datetimepicker7">
+           {{Form::text('fecha','', array('class' => 'form-control','readonly' => 'readonly','placeholder'=>'Ingrese fecha inicio'))}}
+          </div>
+        </div>
 
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-text-input">Nombre</label>
@@ -207,9 +214,48 @@
 
 <footer>
 
+     
+{{ Html::script('modulo-calendario/js/jquery.min.js') }}
+   
+  <script type="text/javascript">
+   $(document).ready(function(){
+   $('#datetimepicker7').datetimepicker({
+      pickTime: true,
+      format: 'MM/DD/YYYY HH:mm'
+   });});
+  </script>
+  
+  <script type="text/javascript">
+   $(document).ready(function(){
+   $('#datetimepicker9').datetimepicker({
+      pickTime: true,
+      format: 'MM/DD/YYYY HH:mm'
+   });});
+  </script>
 
- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
- <script src="//harvesthq.github.io/chosen/chosen.jquery.js"></script>
+  <script type="text/javascript">
+   function openKCFinder(field) {
+   window.KCFinder = {
+   callBack: function(url) {
+            field.value = url;
+            window.KCFinder = null;}
+    };
+    window.open('/vendors/kcfinder/browse.php?type=images&dir=files/public', 'kcfinder_textbox',
+        'status=0, toolbar=0, location=0, menubar=0, directories=0, ' +
+        'resizable=1, scrollbars=0, width=800, height=600');}
+  </script>
+     
+     
+  {{ Html::script('modulo-calendario/js/moment.min.js') }}
+  {{ Html::script('modulo-calendario/js/bootstrap-datetimepicker.min.js') }}
+  {{ Html::script('modulo-calendario/js/validator.js')}}
+  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }} 
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+
+ 
+
  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }} 
 {{ Html::script('/modulo-gestion/validaciones/crear-usuario.js') }}
 
