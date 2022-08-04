@@ -167,6 +167,29 @@ public function editarusuario($id){
   return Redirect('gestion/comercial/cantidades')->with('status', 'ok_create');
  }
 
+  public function dashboard() {
+    if(!$this->tenantName){
+
+      $meses = Gestion::select('tipo')
+     ->selectRaw('count(tipo) as sum')
+     ->groupBy('tipo')
+     ->get();
+
+    $registros = Gestion::all();
+    dd($meses);
+  }else{
+  $registros = \DigitalsiteSaaS\Gestion\Tenant\Gestion::all();
+     $meses = \DigitalsiteSaaS\Gestion\Tenant\Gestion::select('tipo')
+     ->selectRaw('count(tipo) as sum')
+     ->groupBy('tipo')
+     ->get();
+  dd($meses);
+  }
+  return view('gestion::dashboard');
+ }
+
+
+
   public function registrarsector() {
   if(!$this->tenantName){
   $gestion = new Sector;

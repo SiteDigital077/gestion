@@ -8,6 +8,11 @@ class Gestion extends Model
 
 {
 	use UsesTenantConnection;
+
+
+    protected $fillable = [
+    'nombre', 'email', 'numero',
+    ];
  protected $table = 'gestion_usuarios';
  public $timestamps = true;
 }
