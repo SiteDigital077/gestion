@@ -167,6 +167,17 @@ public function editarusuario($id){
   return Redirect('gestion/comercial/cantidades')->with('status', 'ok_create');
  }
 
+  public function dashboard() {
+    if(!$this->tenantName){
+    $registros = Gestion::all();
+  }else{
+  
+  }
+  return view('gestion::dashboard');
+ }
+
+
+
   public function registrarsector() {
   if(!$this->tenantName){
   $gestion = new Sector;
