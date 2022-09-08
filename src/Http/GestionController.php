@@ -43,7 +43,7 @@ $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
   $sectores = Sector::all();
   $productos = Producto::all();
 }else{
-  $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::all();
+  $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::orderBy('created_at', 'desc')->get();
   $sectores = \DigitalsiteSaaS\Gestion\Tenant\Sector::all();
   $productos = \DigitalsiteSaaS\Gestion\Tenant\Producto::all();
 }

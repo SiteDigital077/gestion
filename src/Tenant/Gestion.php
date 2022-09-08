@@ -1,13 +1,11 @@
-
 <?php
 
 namespace DigitalsiteSaaS\Gestion\Tenant;
 
-use Hyn\Tenancy\Traits\UsesTenantConnection;
 use Illuminate\Database\Eloquent\Model;
+use Hyn\Tenancy\Traits\UsesTenantConnection;
 
-
-class Message extends Model
+class Gestion extends Model
 
 {
 	use UsesTenantConnection;
@@ -21,6 +19,7 @@ class Message extends Model
 
 	
 }
+
 
 
 
