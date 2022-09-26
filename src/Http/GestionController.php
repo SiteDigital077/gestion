@@ -245,6 +245,26 @@ public function crearreferido() {
   return view('gestion::crear-productos');
  }
 
+ public function dashboard(){
+
+
+ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::count();
+ $productos = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_productos','gestion_usuarios.interes','=','gestion_productos.id')
+     ->select('interes')
+     ->selectRaw('count(interes) as sum')
+     ->groupBy('interes')
+     ->orderBy('interes', 'desc')
+     ->get();
+
+     $estado_usuario = \DigitalsiteSaaS\Gestion\Tenant\Gestion::select('tipo')
+     ->selectRaw('count(tipo) as sum')
+     ->groupBy('tipo')
+     ->orderBy('tipo', 'desc')
+     ->get();;
+ dd($estado_usuario);
+  return view('gestion::crear-productos');
+ }
+
  public function registro(){
    if(!$this->tenantName){
  $productos = Producto::all();

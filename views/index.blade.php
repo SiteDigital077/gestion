@@ -121,7 +121,8 @@
 
        <a href="<?=URL::to('/portafolio');?>/{{$usuariosa->slug}}"><span  id="tip" data-toggle="tooltip" data-placement="top" title="Ver Portafolio" class="btn btn-warning"><i class="fa fa-book sidebar-nav-icon"></i></span></a>
 
-       <a href="https://api.whatsapp.com/send?phone=+57{{$usuariosa->numero}}&text=Hola" target="_blank"><span  id="tip" data-toggle="tooltip" data-placement="right" title="Ver Portafolio" class="btn btn-success"><i class="fa fa-whatsapp sidebar-nav-icon"></i></span></a>
+       <a href="https://api.whatsapp.com/send?phone=+57{{$usuariosa->numero}}&text=¿Hola cómo estás? 🖐 Bienvenido a Unión Soluciones, Mi nombre es Samuel Martinez 👦, voy a asesorarte el día de hoy.
+¡Dime cómo puedo ayudarte!" target="_blank"><span  id="tip" data-toggle="tooltip" data-placement="right" title="Ver Portafolio" class="btn btn-success"><i class="fa fa-whatsapp sidebar-nav-icon"></i></span></a>
 
        </td>
       </tr>
