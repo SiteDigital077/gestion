@@ -372,9 +372,9 @@ public function valida(){
 public function editrecepcion($id){
  if(!$this->tenantName){
  $usuario = Gestion::join('gestion_cantidad', 'gestion_cantidad.id', '=', 'gestion_usuarios.cantidad_id')
- ->join('gestion_referidos', 'gestion_referidos.id', '=', 'gestion_usuarios.referido_id')
- ->join('gestion_sector', 'gestion_sector.id', '=', 'gestion_usuarios.sector_id')
- ->join('gestion_productos', 'gestion_productos.id', '=', 'gestion_usuarios.interes')
+ ->leftjoinjoin('gestion_referidos', 'gestion_referidos.id', '=', 'gestion_usuarios.referido_id')
+ ->leftjoinjoin('gestion_sector', 'gestion_sector.id', '=', 'gestion_usuarios.sector_id')
+ ->leftjoinjoin('gestion_productos', 'gestion_productos.id', '=', 'gestion_usuarios.interes')
  ->leftjoin('paises', 'paises.id', '=', 'gestion_usuarios.pais_id')
  ->leftjoin('departamentos', 'departamentos.id', '=', 'gestion_usuarios.ciudad_id')
  ->where('gestion_usuarios.id', '=', $id)->get();
@@ -391,9 +391,9 @@ public function editrecepcion($id){
  }
  }else{
  $usuario = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_cantidad', 'gestion_cantidad.id', '=', 'gestion_usuarios.cantidad_id')
- ->join('gestion_referidos', 'gestion_referidos.id', '=', 'gestion_usuarios.referido_id')
- ->join('gestion_sector', 'gestion_sector.id', '=', 'gestion_usuarios.sector_id')
- ->join('gestion_productos', 'gestion_productos.id', '=', 'gestion_usuarios.interes')
+ ->leftjoin('gestion_referidos', 'gestion_referidos.id', '=', 'gestion_usuarios.referido_id')
+ ->leftjoin('gestion_sector', 'gestion_sector.id', '=', 'gestion_usuarios.sector_id')
+ ->leftjoin('gestion_productos', 'gestion_productos.id', '=', 'gestion_usuarios.interes')
  ->leftjoin('paises', 'paises.id', '=', 'gestion_usuarios.pais_id')
  ->leftjoin('departamentos', 'departamentos.id', '=', 'gestion_usuarios.ciudad_id')
  ->where('gestion_usuarios.id', '=', $id)->get();
