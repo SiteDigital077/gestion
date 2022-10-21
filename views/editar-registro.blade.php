@@ -34,6 +34,14 @@
       </div>
     </div>
 
+
+     <div class="form-group">
+     <label class="col-md-3 control-label" for="example-email-input">Valor Propuesta</label>
+       <div class="col-md-9">
+        {{Form::text('valor', $usuarios->valor, array('class' => 'form-control','placeholder'=>'Ingrese valor de la propuesta','value'=>'0'))}}
+       </div>
+    </div>
+
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-email-input">Apellido</label>
       <div class="col-md-9">
