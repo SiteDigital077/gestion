@@ -63,6 +63,7 @@ $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
   }
   $gestion->tipo = Input::get('tipo');
   $gestion->fecha = Input::get('fecha');
+  $gestion->valor = Input::get('valor');
   $gestion->nombre = Input::get('nombre');
   $gestion->apellido = Input::get('apellido');
   $gestion->empresa = Input::get('empresa');
@@ -97,6 +98,7 @@ public function editarusuario($id){
   }
   $gestion->tipo = Input::get('tipo');
   $gestion->fecha = Input::get('fecha');
+  $gestion->valor = Input::get('valor');
   $gestion->nombre = Input::get('nombre');
   $gestion->apellido = Input::get('apellido');
   $gestion->empresa = Input::get('empresa');
@@ -134,7 +136,7 @@ public function editarusuario($id){
   $gestion->interes = Input:: get ('interes');
   $gestion->sector_id = Input:: get ('sector');
   $gestion->cantidad_id = Input:: get ('cantidad');
-  $gestion->referido_id = Input:: get ('referido');
+  $gestion->referido_id = Input:: get ('utm_crm');
   $gestion->comentarios = Input:: get ('comentarios');
   $gestion->pais_id = Input:: get ('pais');
   $gestion->ciudad_id = Input:: get ('ciudad');
@@ -248,21 +250,43 @@ public function crearreferido() {
  public function dashboard(){
 
 
- $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::count();
- $productos = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_productos','gestion_usuarios.interes','=','gestion_productos.id')
-     ->select('interes')
-     ->selectRaw('count(interes) as sum')
-     ->groupBy('interes')
-     ->orderBy('interes', 'desc')
-     ->get();
+$total_usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::count();
 
-     $estado_usuario = \DigitalsiteSaaS\Gestion\Tenant\Gestion::select('tipo')
-     ->selectRaw('count(tipo) as sum')
-     ->groupBy('tipo')
-     ->orderBy('tipo', 'desc')
-     ->get();;
- dd($estado_usuario);
-  return view('gestion::crear-productos');
+$estado_usuario = \DigitalsiteSaaS\Gestion\Tenant\Gestion::select('tipo')
+->selectRaw('count(tipo) as tipo_sum')
+->groupBy('tipo')
+->get();
+
+$productos = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_productos','gestion_usuarios.interes','=','gestion_productos.id')
+->select('interes')
+->selectRaw('count(interes) as productos_sum')
+->groupBy('interes')
+->orderBy('interes', 'desc')
+->get();
+
+$sectores = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_sector','gestion_usuarios.sector_id','=','gestion_sector.id')
+->select('sectores')
+->selectRaw('count(sectores) as sectores_sum')
+->groupBy('sectores')
+->orderBy('sectores', 'desc')
+->get();
+
+$referidos = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_referidos','gestion_usuarios.sector_id','=','gestion_referidos.id')
+->select('referidos')
+->selectRaw('count(referidos) as referidos_sum')
+->groupBy('referidos')
+->orderBy('referidos', 'desc')
+->get();
+
+$cantidades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_cantidad','gestion_usuarios.cantidad_id','=','gestion_cantidad.id')
+->select('cantidad')
+->selectRaw('count(cantidad) as cantidad_sum')
+->groupBy('cantidad')
+->orderBy('cantidad', 'desc')
+->get();
+
+     
+return view('gestion::dashboard')->with('total_usuarios', $total_usuarios)->with('estado_usuario', $estado_usuario);
  }
 
  public function registro(){
@@ -526,7 +550,7 @@ public function editrecepcion($id){
   $gestion->interes = Input:: get ('interes');
   $gestion->sector_id = Input:: get ('sector');
   $gestion->cantidad_id = Input:: get ('cantidad');
-  $gestion->referido_id = Input:: get ('referido');
+  $gestion->referido_id = Input:: get ('utm_crm');
   $gestion->comentarios = Input:: get ('comentarios');
   $gestion->pais_id = Input:: get ('pais');
   $gestion->ciudad_id = Input:: get ('ciudad');
