@@ -1,5 +1,3 @@
-
-
 @extends ('adminsite.layout')
 
 @section('cabecera')

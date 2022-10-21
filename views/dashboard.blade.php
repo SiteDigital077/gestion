@@ -186,16 +186,16 @@
                                     <thead>
                                         <tr>
                                             <th class="text-primary">Página</th>
-                                            <th class="text-primary"># Visitas</th>    
+                                            <th class="text-primary"># Registros</th>    
                                         </tr>
                                     </thead>
                                     <tbody>
-                                     
+                                     @foreach($productos as $productos)
                                         <tr>
-                                           <td style="width:280px"></td>
-                                           <td style="width:100px"></td>
+                                           <td style="width:280px">{{$productos->producto}}</td>
+                                           <td style="width:100px">{{$productos->productos_sum}}</td>
                                         </tr>
-                          
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -216,23 +216,22 @@
                             <div class="table-responsive">
                                 <table class="table table-vcenter table-striped">
                                     <thead>
+                                        
                                         <tr>
                                             <th class="text-primary">Referidos</th>
-                                            <th class="text-primary"># Visitas</th>    
+                                            <th class="text-primary"># Registros</th>    
                                         </tr>
+                                     
                                     </thead>
                                     <tbody>
-                           
+                                    @foreach($referidos as $referidos)
                                         <tr>
                                            
-                                            <td style="width:280px">/</td>
-                                      
-                                           <td style="width:280px"></td>
-                           
-                                           <td style="width:100px"></td>
+                                           <td style="width:100px">{{$referidos->referidos}}</td>
+                                            <td style="width:100px">{{$referidos->referidos_sum}}</td>
                                         </tr>
                                     
-
+                                           @endforeach
                                     </tbody>
                                 </table>
                             </div>

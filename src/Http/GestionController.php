@@ -258,10 +258,10 @@ $estado_usuario = \DigitalsiteSaaS\Gestion\Tenant\Gestion::select('tipo')
 ->get();
 
 $productos = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_productos','gestion_usuarios.interes','=','gestion_productos.id')
-->select('interes')
-->selectRaw('count(interes) as productos_sum')
-->groupBy('interes')
-->orderBy('interes', 'desc')
+->select('producto')
+->selectRaw('count(producto) as productos_sum')
+->groupBy('producto')
+->orderBy('producto', 'desc')
 ->get();
 
 $sectores = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_sector','gestion_usuarios.sector_id','=','gestion_sector.id')
@@ -286,7 +286,7 @@ $cantidades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_cantida
 ->get();
 
      
-return view('gestion::dashboard')->with('total_usuarios', $total_usuarios)->with('estado_usuario', $estado_usuario);
+return view('gestion::dashboard')->with('total_usuarios', $total_usuarios)->with('estado_usuario', $estado_usuario)->with('productos', $productos)->with('referidos', $referidos);
  }
 
  public function registro(){
