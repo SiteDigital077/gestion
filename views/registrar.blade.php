@@ -260,12 +260,12 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
-
  
-
+ {{ Html::script('modulo-gestion/validaciones/editar-usuario.js') }}
  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }} 
-{{ Html::script('/modulo-gestion/validaciones/crear-usuario.js') }}
 
+
+     <script src="//harvesthq.github.io/chosen/chosen.jquery.js"></script>
 
   <script type="text/javascript"></script>
     <script type="text/javascript">
@@ -307,6 +307,6 @@ $(".chosen-select").chosen();
             });
         });
       });
-   </script>   
+   </script> 
 </footer>
 @stop

@@ -285,8 +285,15 @@ $cantidades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_cantida
 ->orderBy('cantidad', 'desc')
 ->get();
 
+$ciudades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('departamentos','gestion_usuarios.ciudad_id','=','departamentos.id')
+->select('departamento')
+->selectRaw('count(departamento) as ciudad_sum')
+->groupBy('departamento')
+->orderBy('departamento', 'desc')
+->get();
+
      
-return view('gestion::dashboard')->with('total_usuarios', $total_usuarios)->with('estado_usuario', $estado_usuario)->with('productos', $productos)->with('referidos', $referidos);
+return view('gestion::dashboard')->with('total_usuarios', $total_usuarios)->with('estado_usuario', $estado_usuario)->with('productos', $productos)->with('referidos', $referidos)->with('ciudades', $ciudades);
  }
 
  public function registro(){

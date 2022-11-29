@@ -175,7 +175,7 @@
  <div class="block">
                             <!-- Responsive Full Title -->
                             <div class="block-title">
-                                <h2><strong>Páginas</strong> vistas</h2>
+                                <h2><strong>Producto</strong> interés</h2>
                             </div>
                             <!-- END Responsive Full Title -->
 
@@ -207,7 +207,7 @@
  <div class="block">
                             <!-- Responsive Full Title -->
                             <div class="block-title">
-                                <h2><strong>Visitas</strong> referidas</h2>
+                                <h2><strong>Fuente</strong> tráfico</h2>
                             </div>
                             <!-- END Responsive Full Title -->
 
@@ -246,7 +246,7 @@
  <div class="block">
                             <!-- Responsive Full Title -->
                             <div class="block-title">
-                                <h2><strong>Visitas</strong> ciudades</h2>
+                                <h2><strong>Ciudad</strong> registro</h2>
                             </div>
                             <!-- END Responsive Full Title -->
 
@@ -255,18 +255,20 @@
                             <div class="table-responsive">
                                 <table class="table table-vcenter table-striped">
                                     <thead>
+                                       
                                         <tr>
                                             <th class="text-primary">Ciudades</th>
-                                            <th class="text-primary"># Visitas</th>    
+                                            <th class="text-primary"># Registros</th>    
                                         </tr>
+                                      
                                     </thead>
                                     <tbody>
-                                   
+                                        @foreach($ciudades as $ciudades)
                                         <tr>
-                                           <td style="width:280px"></td>
-                                           <td style="width:100px"></td>
+                                           <td style="width:280px">{{$ciudades->departamento}}</td>
+                                           <td style="width:100px">{{$ciudades->ciudad_sum}}</td>
                                         </tr>
-                               
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
