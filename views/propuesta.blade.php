@@ -55,77 +55,70 @@
 
 <div class="container">
 
+<div class="container-fluid">
+  <a href="/gestion/comercial/crear-propuesta/{{Request::segment(4)}}" class="btn btn-primary pull-right">Crear propuesta</a>
+ </div>
  <br>
  
  <div class="block full">
   <div class="block-title">
-   <h2><strong>Prospectos</strong> registrados</h2>
+   <h2><strong>Propuestas</strong> Registradas</h2>
   </div>
             
   <div class="table-responsive">
    <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
     <thead>
+
      <tr>
-      <th class="text-center">Nombres y Apellidos</th>
-      <th class="text-center">Empresa</th>
+      <th class="text-center">Fecha de Presentación</th>
+      <th class="text-center">Producto / Servicio</th>
       <th class="text-center">Estado</th>
-      <th class="text-center">Email</th>
-      <th class="text-center">Intéres</th>
-      <th class="text-center">Sector</th>
-      <th class="text-center">Creación</th>
+      <th class="text-center">Valor propuesta</th>
+  
       <th class="text-center">Acciones</th>
      </tr>
     </thead>
     
     <tbody>
-      @foreach($usuarios as $usuariosa)
+    @foreach($propuesta as $propuesta)
 
       <tr>
-       <td class="text-center">{{$usuariosa->nombre}} {{$usuariosa->apellido}}</td>
+       <td class="text-center">{{$propuesta->fecha_presentacion}}</td>
        
-       <td class="text-center">{{$usuariosa->empresa}}</td>
-       @if($usuariosa->tipo == '1')
-       <td class="text-center"> <span class="badge label-info">Contacto</span></td>
-       @elseif($usuariosa->tipo == '2')
-       <td class="text-center"> <span class="badge label-warning">En Proceso</span></td>
-       @elseif($usuariosa->tipo == '3')
+       <td class="text-center"></td>
+
+      @if($propuesta->estado_propuesta == '1')
+        <td class="text-center"> <span class="badge label-warning">En Proceso</span></td>
+       @elseif($propuesta->estado_propuesta == '2')
+       <td class="text-center"> <span class="badge label-danger">No Ganado</span></td>
+       @elseif($propuesta->estado_propuesta == '3')
        <td class="text-center"> <span class="badge label-success">Ganado</span></td>
-       @endif
-       <td>{{$usuariosa->email}}</td>
-      
-       @foreach($productos as $productosa)
-       @if($usuariosa->interes == $productosa->id)
-       <td>{{$productosa->producto}}</td>
-       @endif
-       @endforeach
+      @endif
+  
+    
 
-       @foreach($sectores as $sectoresa)
-       @if($usuariosa->sector_id == $sectoresa->id)
-       <td>{{$sectoresa->sectores}}</td>
-       @endif
-       @endforeach
-
-       <td>{{$usuariosa->created_at}}</td>
+       <td class="text-center">$ {{number_format($propuesta->valor_propuesta,0,",",".")}}</td>
        <td class="text-center">
 
         
 
-        <a href="<?=URL::to('gestion/comercial/editar-recepcion/');?>/{{$usuariosa->id}}"><span  id="tip" data-toggle="tooltip" data-placement="left" title="Editar usuario" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>
+        <a href="<?=URL::to('gestion/comercial/editar-recepcion/');?>/"><span  id="tip" data-toggle="tooltip" data-placement="left" title="Editar usuario" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>
 
        <script language="JavaScript">
 		    function confirmar ( mensaje ) {
 		    return confirm( mensaje );}
 	      </script>
 
-       <a href="<?=URL::to('gestion/comercial/eliminar');?>/{{$usuariosa->id}}" onclick="return confirmar('¿Está seguro que desea eliminar el registro?')"><span id="tup" data-toggle="tooltip" data-placement="top" title="Eliminar usuario" class="btn btn-danger" disabled="true"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
-       <a href="<?=URL::to('/gestion/comercial/propuesta');?>/{{$usuariosa->id}}"><span  id="tip" data-toggle="tooltip" data-placement="top" title="Ver Portafolio" class="btn btn-warning"><i class="fa fa-book sidebar-nav-icon"></i></span></a>
+       <a href="<?=URL::to('gestion/comercial/eliminar');?>/" onclick="return confirmar('¿Está seguro que desea eliminar el registro?')"><span id="tup" data-toggle="tooltip" data-placement="top" title="Eliminar usuario" class="btn btn-danger" disabled="true"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
 
-       <a href="https://api.whatsapp.com/send?phone=+57{{$usuariosa->numero}}&text=¿Hola cómo estás? 🖐 Bienvenido a Unión Soluciones, Mi nombre es Samuel Martinez 👦, voy a asesorarte el día de hoy.
+       <a href="<?=URL::to('/portafolio');?>/"><span  id="tip" data-toggle="tooltip" data-placement="top" title="Ver Portafolio" class="btn btn-warning"><i class="fa fa-book sidebar-nav-icon"></i></span></a>
+
+       <a href="https://api.whatsapp.com/send?phone=+57&text=¿Hola cómo estás? 🖐 Bienvenido a Unión Soluciones, Mi nombre es Samuel Martinez 👦, voy a asesorarte el día de hoy.
 ¡Dime cómo puedo ayudarte!" target="_blank"><span  id="tip" data-toggle="tooltip" data-placement="right" title="Ver Portafolio" class="btn btn-success"><i class="fa fa-whatsapp sidebar-nav-icon"></i></span></a>
 
        </td>
       </tr>
-      @endforeach
+   @endforeach
     </tbody>
    </table>
   </div>

@@ -9,6 +9,9 @@ Route::post('gestion/crearpais', 'DigitalsiteSaaS\Pagina\Http\ConfiguracionContr
 Route::post('gestion/actualizarpais', 'DigitalsiteSaaS\Pagina\Http\ConfiguracionController@crearpais'); 
 
 Route::get('gestion/comercial/registro', 'DigitalsiteSaaS\Gestion\Http\GestionController@registro');
+Route::get('gestion/comercial/propuesta/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@propuesta');
+Route::get('gestion/comercial/crear-propuesta/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@crearpropuesta');
+Route::post('gestion/comercial/crearpropuesta', 'DigitalsiteSaaS\Gestion\Http\GestionController@crearpropuestanew');
 Route::get('gestion/comercial/dashboard', 'DigitalsiteSaaS\Gestion\Http\GestionController@dashboard');
 
 Route::get('gestion/comercial/editar/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@edito');

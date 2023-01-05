@@ -343,6 +343,40 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  return view('gestion::editar-cantidad')->with('cantidad', $cantidad);
 }
 
+ public function propuesta($id){
+ if(!$this->tenantName){
+ $propuesta = Propuesta::where('id', '=', $id)->get();
+ }else{
+ $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::where('id', '=', $id)->get();
+ }
+ return view('gestion::propuesta')->with('propuesta', $propuesta);
+}
+
+public function crearpropuesta($id){
+ if(!$this->tenantName){
+ $productos = Producto::all(); 
+ }else{
+ $productos = \DigitalsiteSaaS\Gestion\Tenant\Producto::all(); 
+ }
+ return view('gestion::crear-propuesta')->with('productos', $productos);
+}
+
+ public function crearpropuestanew() {
+  if(!$this->tenantName){
+  $gestion = new Propuesta;
+  }else{
+  $gestion = new \DigitalsiteSaaS\Gestion\Tenant\Propuesta;  
+  }
+  $gestion->estado_propuesta = Input::get('tipo');
+  $gestion->valor_propuesta = Input::get('valor');
+  $gestion->fecha_presentacion = Input::get('fecha');
+  $gestion->producto_servicio = Input::get('intereses');
+  $gestion->observaciones = Input::get('comentarios');
+  $gestion->gestion_usuario_id = Input::get('cliente');
+  $gestion->save();
+  return Redirect('/gestion/comercial')->with('status', 'ok_create');
+ }
+
  public function portafolio($id){
  if(!$this->tenantName){
  $empresa = Gestion::where('slug','=',$id)->get();

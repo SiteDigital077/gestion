@@ -39,18 +39,18 @@
     <div class="block-title">
      <div class="block-options pull-right">
      </div>
-     <h2><strong>Crear</strong> usuario</h2>
+     <h2><strong>Crear</strong> propuesta</h2>
     </div>
     
-    {{ Form::open(array('method' => 'POST','class' => 'form-horizontal','id' => 'defaultForm', 'url' => array('gestion/registrar/usuario'))) }}
+    {{ Form::open(array('method' => 'POST','class' => 'form-horizontal','id' => 'defaultForm', 'url' => array('gestion/comercial/crearpropuesta'))) }}
 
     <div class="form-group">
-     <label class="col-md-3 control-label" for="example-text-input">Tipo usuario</label>
+     <label class="col-md-3 control-label" for="example-text-input">Estado Propuesta</label>
       <div class="col-md-9">
       {{ Form::select('tipo', [
-      '1' => 'Contacto',
-      '2' => 'Prospecto',
-      '3' => 'Cliente'
+      '1' => 'En Proceso',
+      '2' => 'No Ganada',
+      '3' => 'Ganada'
       ], null, array('class' => 'form-control')) }}
       </div>
     </div>
@@ -63,81 +63,16 @@
     </div>
 
     <div class="form-group">
-     <label class="col-md-3 control-label" for="example-email-input">Fecha Inicio</label>
+     <label class="col-md-3 control-label" for="example-email-input">Fecha Presentación</label>
        <div class="col-md-9 date" id="datetimepicker7">
-        {{Form::text('fecha','', array('class' => 'form-control','readonly' => 'readonly','placeholder'=>'Ingrese fecha inicio'))}}
+        {{Form::text('fecha','', array('class' => 'form-control','readonly' => 'readonly','placeholder'=>'Ingrese fecha presentación'))}}
        </div>
     </div>
 
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-text-input">Nombre</label>
-      <div class="col-md-9">
-       {{Form::text('nombre', '', array('class' => 'form-control','placeholder'=>'Ingrese nombre'))}}
-      </div>
-    </div>
 
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-email-input">Apellido</label>
-      <div class="col-md-9">
-       {{Form::text('apellido', '', array('class' => 'form-control','placeholder'=>'Ingrese apellido'))}}
-      </div>
-    </div>
 
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-email-input">Empresa</label>
-      <div class="col-md-9">
-       {{Form::text('empresa', '', array('class' => 'form-control','placeholder'=>'Ingrese empresa'))}}
-      </div>
-    </div>
-
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-password-input">Dirección</label>
-      <div class="col-md-9">
-       {{Form::text('direccion', '', array('class' => 'form-control','placeholder'=>'Ingrese dirección'))}}
-      </div>
-    </div>
-
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-email-input">Nit o Documento</label>
-      <div class="col-md-9">
-       {{Form::text('nit', '', array('class' => 'form-control','placeholder'=>'Ingrese Nit o Documento'))}}
-      </div>
-    </div>
-    
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-email-input">Email</label>
-      <div class="col-md-9">
-       {{Form::text('email', '', array('class' => 'form-control','placeholder'=>'Ingrese email'))}}
-      </div>
-    </div>
-
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-password-input">Número de contacto</label>
-      <div class="col-md-9">
-       {{Form::text('numero', '', array('class' => 'form-control','placeholder'=>'Ingrese teléfono fijo o célular'))}}
-      </div>
-    </div>
-
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-select">Pais</label>
-      <div class="col-md-9">
-       <select id="pais" name="pais" class="form-control" size="1">
-        <option value="" disabled selected>Seleccione país</option>
-         @foreach($paises as $paises)
-          <option value="{{$paises->id}}">{{$paises->pais}}</option>
-         @endforeach
-       </select>
-      </div>
-    </div>
-                                      
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-text-input">Ciudad</label>
-      <div class="col-md-9">
-       <select name="ciudad" id="ciudad" class="form-control" size="1">
-       <option></option>
-     </select>
-    </div>
-    </div>
+      
+                    
                          
 
 
@@ -151,7 +86,7 @@
                                             <label class="col-md-3 control-label" for="example-text-input">Producto de intéres</label>
                                             <div class="col-md-9">
                                                 <div id="output"></div>
-                                                <select multiple="multiple" data-placeholder="Seleccione roles..." name="interes[]" multiple class="chosen-select form-control" id="interes">
+                                                <select multiple="multiple" data-placeholder="Seleccione productos/servicios..." name="interes[]" multiple class="chosen-select form-control" id="interes">
                                                  @foreach($productos as $productos)
           <option value="{{$productos->id}}">{{$productos->producto}}</option>
          @endforeach
@@ -159,41 +94,7 @@
                                             </div>
                                         </div>
 
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-select">Sector</label>
-      <div class="col-md-9">
-       <select name="sector" id="inputConcepto" class="form-control">
-         <option value="" disabled selected>Seleccione Sector</option>
-         @foreach($sectores as $sectores)
-          <option value="{{$sectores->id}}">{{$sectores->sectores}}</option>
-         @endforeach
-       </select>
-      </div>
-    </div>
 
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-select">Referido</label>
-      <div class="col-md-9">
-       <select name="referido" id="inputConcepto" class="form-control">
-         <option value="" disabled selected>Seleccione Referido</option>
-         @foreach($referidos as $referidos)
-          <option value="{{$referidos->id}}">{{$referidos->referidos}}</option>
-         @endforeach
-       </select>
-      </div>
-    </div>
-
-    <div class="form-group">
-     <label class="col-md-3 control-label" for="example-select"># Empleados</label>
-      <div class="col-md-9">
-       <select name="cantidad" id="inputConcepto" class="form-control">
-         <option value="" disabled selected>Seleccione número de empleados</option>
-         @foreach($cantidades as $cantidades)
-          <option value="{{$cantidades->id}}">{{$cantidades->cantidad}}</option>
-         @endforeach
-       </select>
-      </div>
-    </div>
 
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-password-input">Comentarios</label>
@@ -202,6 +103,7 @@
       </div>
     </div>
 
+{{Form::hidden('cliente', Request::segment(4), array('class' => 'form-control','placeholder'=>'Ingrese valor de la propuesta','value'=>'0'))}}
 
     <div class="form-group form-actions">
      <div class="col-md-9 col-md-offset-3">
