@@ -13,6 +13,9 @@ Route::get('gestion/comercial/propuesta/{id}', 'DigitalsiteSaaS\Gestion\Http\Ges
 Route::get('gestion/comercial/crear-propuesta/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@crearpropuesta');
 Route::post('gestion/comercial/crearpropuesta', 'DigitalsiteSaaS\Gestion\Http\GestionController@crearpropuestanew');
 Route::get('gestion/comercial/dashboard', 'DigitalsiteSaaS\Gestion\Http\GestionController@dashboard');
+Route::get('gestion/comercial/editar-propuesta/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarpropuesta');
+Route::post('gestion/comercial/editarpropuesta/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarpropuestaa');
+
 
 Route::get('gestion/comercial/editar/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@edito');
 

@@ -85,7 +85,11 @@
       <tr>
        <td class="text-center">{{$propuesta->fecha_presentacion}}</td>
        
-       <td class="text-center"></td>
+       <td class="text-center">
+        @foreach($productos as $productos)
+        {{$productos->producto}}
+        @endforeach
+      </td>
 
       @if($propuesta->estado_propuesta == '1')
         <td class="text-center"> <span class="badge label-warning">En Proceso</span></td>
@@ -102,7 +106,7 @@
 
         
 
-        <a href="<?=URL::to('gestion/comercial/editar-recepcion/');?>/"><span  id="tip" data-toggle="tooltip" data-placement="left" title="Editar usuario" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>
+        <a href="<?=URL::to('gestion/comercial/editar-propuesta/');?>/{{$propuesta->id}}"><span  id="tip" data-toggle="tooltip" data-placement="left" title="Editar usuario" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>
 
        <script language="JavaScript">
 		    function confirmar ( mensaje ) {

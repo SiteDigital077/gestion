@@ -9,6 +9,7 @@ use DigitalsiteSaaS\Gestion\Producto;
 use DigitalsiteSaaS\Gestion\Sector;
 use DigitalsiteSaaS\Gestion\Referido;
 use DigitalsiteSaaS\Gestion\Cantidad;
+use DigitalsiteSaaS\Gestion\Propuesta;
 use Input;
 use DB;
 use Illuminate\Support\Str;
@@ -345,12 +346,60 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
 
  public function propuesta($id){
  if(!$this->tenantName){
- $propuesta = Propuesta::where('id', '=', $id)->get();
- }else{
- $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::where('id', '=', $id)->get();
+ $propuesta = Propuesta::leftjoin('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
+ ->whereIn('gestion_propuestas.id', '=', $id)
+ ->get();
+  foreach($propuesta as $propuestas){
+  $items = str_replace('"', '', $propuestas->producto_servicio);
+
+ $productos =  Producto::whereIn('id', array('1,2'))->get();
  }
- return view('gestion::propuesta')->with('propuesta', $propuesta);
+ }else{
+ $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::join('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
+ ->where('gestion_propuestas.id', '=', $id)
+ ->get();
+
+ foreach($propuesta as $propuestas){
+  $items = str_replace('"', '', $propuestas->producto_servicio);
+
+ $productos =  \DigitalsiteSaaS\Gestion\Tenant\Producto::whereIn('id', array('1,2'))->get();
+ }
+
+ }
+ return view('gestion::propuesta')->with('propuesta', $propuesta)->with('productos', $productos);
 }
+
+
+ public function editarpropuesta($id){
+ if(!$this->tenantName){
+ $propuesta = Propuesta::leftjoin('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
+ ->whereIn('gestion_propuestas.id', '=', $id)
+ ->get();
+
+ $intereses = Gestion::where('id','=',$id)->get();
+ foreach ($intereses as $interes){
+ $ideman = $interes->interes;
+ $id_str = explode(',', $ideman);
+ $productosa = Producto::whereIn('id', $id_str)->get();
+ $productos = Producto::whereNotIn('id',$id_str)->get();
+ }
+ }else{
+ $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::join('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
+ ->where('gestion_propuestas.id', '=', $id)
+ ->get();
+
+$intereses = \DigitalsiteSaaS\Gestion\Tenant\Gestion::where('id','=',$id)->get();
+ foreach ($intereses as $interes){
+ $ideman = $interes->interes;
+ $id_str = explode(',', $ideman);
+ $productosa = \DigitalsiteSaaS\Gestion\Tenant\Producto::whereIn('id', $id_str)->get();
+ $productos = \DigitalsiteSaaS\Gestion\Tenant\Producto::whereNotIn('id',$id_str)->get();
+ }
+ }
+
+ return view('gestion::editar-propuesta')->with('propuesta', $propuesta)->with('productos', $productos)->with('productos', $productos)->with('productosa', $productosa);
+}
+
 
 public function crearpropuesta($id){
  if(!$this->tenantName){
@@ -540,6 +589,26 @@ public function editrecepcion($id){
   $gestion->cantidad = Input::get('cantidad');
   $gestion->save();
   return Redirect('/gestion/comercial/cantidades')->with('status', 'ok_update');
+ }
+
+  public function editarpropuestaa($id){
+  $interes = Input::get('interes');
+  $data = json_encode($interes, true);
+  $vowels = array('"', '[', ']');
+  $onlyconsonants = str_replace($vowels, '', $data);
+  if(!$this->tenantName){
+  $propuesta = Propuesta::find($id);
+  }else{
+  $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::find($id);
+  }
+  $propuesta->estado_propuesta = Input::get('tipo');
+  $propuesta->valor_propuesta = Input::get('valor');
+  $propuesta->fecha_presentacion = Input::get('fecha');
+  $propuesta->producto_servicio = $onlyconsonants;
+  $propuesta->observaciones = Input::get('comentarios');
+  $propuesta->gestion_usuario_id = Input::get('cliente');
+  $propuesta->save();
+  return Redirect('gestion/comercial/propuesta/1')->with('status', 'ok_update');
  }
 
  public function editarreferido($id){
