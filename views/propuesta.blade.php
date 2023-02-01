@@ -86,9 +86,7 @@
        <td class="text-center">{{$propuesta->fecha_presentacion}}</td>
        
        <td class="text-center">
-        @foreach($productos as $productos)
-        {{$productos->producto}}
-        @endforeach
+       
       </td>
 
       @if($propuesta->estado_propuesta == '1')

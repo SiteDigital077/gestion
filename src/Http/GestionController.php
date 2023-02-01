@@ -355,7 +355,7 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  $productos =  Producto::whereIn('id', array('1,2'))->get();
  }
  }else{
- $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::join('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
+ $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::leftjoin('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
  ->where('gestion_propuestas.id', '=', $id)
  ->get();
 
@@ -366,7 +366,7 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  }
 
  }
- return view('gestion::propuesta')->with('propuesta', $propuesta)->with('productos', $productos);
+ return view('gestion::propuesta')->with('propuesta', $propuesta);
 }
 
 
