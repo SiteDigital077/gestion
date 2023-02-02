@@ -253,6 +253,10 @@ public function crearreferido() {
 
 $total_usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::count();
 
+$total_propuestas = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::sum('valor_propuesta');
+$total_proceso = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::where('estado_propuesta','=','1')->sum('valor_propuesta');
+$total_ganadas = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::where('estado_propuesta','=','3')->sum('valor_propuesta');
+
 $estado_usuario = \DigitalsiteSaaS\Gestion\Tenant\Gestion::select('tipo')
 ->selectRaw('count(tipo) as tipo_sum')
 ->groupBy('tipo')
@@ -294,7 +298,7 @@ $ciudades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('departamentos','g
 ->get();
 
      
-return view('gestion::dashboard')->with('total_usuarios', $total_usuarios)->with('estado_usuario', $estado_usuario)->with('productos', $productos)->with('referidos', $referidos)->with('ciudades', $ciudades);
+return view('gestion::dashboard')->with('total_usuarios', $total_usuarios)->with('estado_usuario', $estado_usuario)->with('productos', $productos)->with('referidos', $referidos)->with('ciudades', $ciudades)->with('total_propuestas', $total_propuestas)->with('total_proceso', $total_proceso)->with('total_ganadas', $total_ganadas);
  }
 
  public function registro(){
