@@ -351,7 +351,7 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  public function propuesta($id){
  if(!$this->tenantName){
  $propuesta = Propuesta::leftjoin('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
- ->whereIn('gestion_propuestas.id', '=', $id)
+ ->whereIn('gestion_propuestas.gestion_usuario_id', '=', $id)
  ->get();
   foreach($propuesta as $propuestas){
   $items = str_replace('"', '', $propuestas->producto_servicio);
@@ -360,7 +360,7 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  }
  }else{
  $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::leftjoin('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
- ->where('gestion_propuestas.id', '=', $id)
+ ->where('gestion_propuestas.gestion_usuario_id', '=', $id)
  ->get();
 
  foreach($propuesta as $propuestas){
