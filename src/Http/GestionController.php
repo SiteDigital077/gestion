@@ -377,7 +377,7 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  public function editarpropuesta($id){
  if(!$this->tenantName){
  $propuesta = Propuesta::leftjoin('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
- ->whereIn('gestion_propuestas.id', '=', $id)
+ ->whereIn('gestion_propuestas.gestion_usuario_id', '=', $id)
  ->get();
 
  $intereses = Gestion::where('id','=',$id)->get();
@@ -388,8 +388,8 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  $productos = Producto::whereNotIn('id',$id_str)->get();
  }
  }else{
- $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::join('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
- ->where('gestion_propuestas.id', '=', $id)
+ $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::lefjoin('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
+ ->where('gestion_propuestas.gestion_usuario_id', '=', $id)
  ->get();
 
 $intereses = \DigitalsiteSaaS\Gestion\Tenant\Gestion::where('id','=',$id)->get();
