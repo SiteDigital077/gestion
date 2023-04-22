@@ -40,7 +40,7 @@ Route::post('gestion/comercial/editarproducto/{id}', 'DigitalsiteSaaS\Gestion\Ht
 Route::post('gestion/comercial/editarusuario/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarusuario');
 
 Route::resource('gestion/comercial/editar-usuario', 'DigitalsiteSaaS\Gestion\Http\GestionController@edit');
-Route::resource('gestion/comercial/eliminar', 'DigitalsiteSaaS\Gestion\Http\GestionController@eliminar');
+Route::get('gestion/comercial/eliminar/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@eliminar');
 Route::get('gestion/comercial/eliminar-producto/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@eliminarproducto');
 Route::get('gestion/comercial/eliminar-sector/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@eliminarsector');
 Route::get('gestion/comercial/eliminar-referido/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@eliminarreferido');

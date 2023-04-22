@@ -48,31 +48,33 @@
      <label class="col-md-3 control-label" for="example-text-input">Tipo usuario</label>
       <div class="col-md-9">
       {{ Form::select('tipo', [
-      '1' => 'Contacto',
+      '1' => 'Lead',
       '2' => 'Prospecto',
-      '3' => 'Cliente'
+      '3' => 'Cliente',
+      '4' => 'Perdido',
+      '5' => 'Sin Oportunidad'
       ], null, array('class' => 'form-control')) }}
       </div>
     </div>
-
+  
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-email-input">Valor Propuesta</label>
        <div class="col-md-9">
-        {{Form::text('valor','', array('class' => 'form-control','placeholder'=>'Ingrese valor de la propuesta','value'=>'0'))}}
+        {{Form::text('valor','0', array('class' => 'form-control','placeholder'=>'Ingrese valor de la propuesta','value'=>'0'))}}
        </div>
     </div>
 
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-email-input">Fecha Inicio</label>
        <div class="col-md-9 date" id="datetimepicker7">
-        {{Form::text('fecha','', array('class' => 'form-control','readonly' => 'readonly','placeholder'=>'Ingrese fecha inicio'))}}
+        {{Form::text('fecha','', array('class' => 'form-control','required' => 'required','readonly' => 'readonly','placeholder'=>'Ingrese fecha inicio'))}}
        </div>
     </div>
 
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-text-input">Nombre</label>
       <div class="col-md-9">
-       {{Form::text('nombre', '', array('class' => 'form-control','placeholder'=>'Ingrese nombre'))}}
+       {{Form::text('nombre', '', array('class' => 'form-control','required' => 'required','placeholder'=>'Ingrese nombre'))}}
       </div>
     </div>
 
@@ -107,7 +109,7 @@
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-email-input">Email</label>
       <div class="col-md-9">
-       {{Form::text('email', '', array('class' => 'form-control','placeholder'=>'Ingrese email'))}}
+       {{Form::text('email', '', array('class' => 'form-control','placeholder'=>'Ingrese email','required'=>'required'))}}
       </div>
     </div>
 
@@ -121,7 +123,7 @@
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-select">Pais</label>
       <div class="col-md-9">
-       <select id="pais" name="pais" class="form-control" size="1">
+       <select id="pais" name="pais" class="form-control" size="1" required>
         <option value="" disabled selected>Seleccione país</option>
          @foreach($paises as $paises)
           <option value="{{$paises->id}}">{{$paises->pais}}</option>
@@ -133,36 +135,29 @@
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-text-input">Ciudad</label>
       <div class="col-md-9">
-       <select name="ciudad" id="ciudad" class="form-control" size="1">
+       <select name="ciudad" id="ciudad" class="form-control" size="1" required>
        <option></option>
      </select>
     </div>
     </div>
                          
 
-
-
-
-
-
-
-
     <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-text-input">Producto de intéres</label>
-                                            <div class="col-md-9">
-                                                <div id="output"></div>
-                                                <select multiple="multiple" data-placeholder="Seleccione roles..." name="interes[]" multiple class="chosen-select form-control" id="interes">
-                                                 @foreach($productos as $productos)
+     <label class="col-md-3 control-label" for="example-text-input">Producto de intéres</label>
+      <div class="col-md-9">
+       <div id="output"></div>
+        <select multiple="multiple" data-placeholder="Seleccione roles..." name="interes[]" multiple class="chosen-select form-control" id="interes" required>
+         @foreach($productos as $productos)
           <option value="{{$productos->id}}">{{$productos->producto}}</option>
          @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+        </select>
+      </div>
+    </div>
 
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-select">Sector</label>
       <div class="col-md-9">
-       <select name="sector" id="inputConcepto" class="form-control">
+       <select name="sector" id="inputConcepto" class="form-control" required >
          <option value="" disabled selected>Seleccione Sector</option>
          @foreach($sectores as $sectores)
           <option value="{{$sectores->id}}">{{$sectores->sectores}}</option>
@@ -174,7 +169,7 @@
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-select">Referido</label>
       <div class="col-md-9">
-       <select name="referido" id="inputConcepto" class="form-control">
+       <select name="referido" id="inputConcepto" class="form-control" required>
          <option value="" disabled selected>Seleccione Referido</option>
          @foreach($referidos as $referidos)
           <option value="{{$referidos->id}}">{{$referidos->referidos}}</option>
@@ -186,7 +181,7 @@
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-select"># Empleados</label>
       <div class="col-md-9">
-       <select name="cantidad" id="inputConcepto" class="form-control">
+       <select name="cantidad" id="inputConcepto" class="form-control" required>
          <option value="" disabled selected>Seleccione número de empleados</option>
          @foreach($cantidades as $cantidades)
           <option value="{{$cantidades->id}}">{{$cantidades->cantidad}}</option>
@@ -252,29 +247,27 @@
   </script>
      
      
-  {{ Html::script('modulo-calendario/js/moment.min.js') }}
-  {{ Html::script('modulo-calendario/js/bootstrap-datetimepicker.min.js') }}
-  {{ Html::script('modulo-calendario/js/validator.js')}}
-  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }} 
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+{{ Html::script('modulo-calendario/js/moment.min.js') }}
+{{ Html::script('modulo-calendario/js/bootstrap-datetimepicker.min.js') }}
+{{ Html::script('modulo-calendario/js/validator.js')}}
+{{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }} 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
  
- {{ Html::script('modulo-gestion/validaciones/editar-usuario.js') }}
- {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }} 
+{{ Html::script('modulo-gestion/validaciones/crear-usuario.js') }}
+{{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }} 
 
 
-     <script src="//harvesthq.github.io/chosen/chosen.jquery.js"></script>
+<script src="//harvesthq.github.io/chosen/chosen.jquery.js"></script>
 
-  <script type="text/javascript"></script>
-    <script type="text/javascript">
+<script type="text/javascript">
 document.getElementById('output').innerHTML = location.search;
 $(".chosen-select").chosen();
 </script>
 
 
   <script type="text/javascript">
-     
       $('#pais').on('change',function(e){
         console.log(e);
 
@@ -291,13 +284,10 @@ $(".chosen-select").chosen();
    </script>  
 
 
-   <script type="text/javascript">
-     
+   <script type="text/javascript">  
       $('#ciudad').on('change',function(e){
         console.log(e);
-
         var cat_id = e.target.value;
-
         $.get('/ubicacion/ajax-subcatweb?cat_id=' + cat_id, function(data){
             $('#municipio').empty();
             $.each(data, function(index, subcatObj){

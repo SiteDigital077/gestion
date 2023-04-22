@@ -48,9 +48,11 @@
      <label class="col-md-3 control-label" for="example-text-input">Tipo usuario</label>
       <div class="col-md-9">
       {{ Form::select('tipo', [$usuario->tipo => $usuario->tipo,
-      '1' => 'Contacto',
+      '1' => 'Lead',
       '2' => 'Prospecto',
-      '3' => 'Cliente'
+      '3' => 'Cliente',
+      '4' => 'Perdido',
+      '5' => 'Sin Oportunidad'
       ], null, array('class' => 'form-control')) }}
       </div>
     </div>

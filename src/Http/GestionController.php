@@ -43,12 +43,15 @@ $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
   $usuarios = Gestion::all();
   $sectores = Sector::all();
   $productos = Producto::all();
+  $referidos = Referido::all();
 }else{
   $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::orderBy('created_at', 'desc')->get();
   $sectores = \DigitalsiteSaaS\Gestion\Tenant\Sector::all();
+  $referidos = \DigitalsiteSaaS\Gestion\Tenant\Referido::all();
   $productos = \DigitalsiteSaaS\Gestion\Tenant\Producto::all();
 }
-  return view('gestion::index')->with('usuarios', $usuarios)->with('sectores', $sectores)->with('productos', $productos);
+
+  return view('gestion::index')->with('usuarios', $usuarios)->with('sectores', $sectores)->with('productos', $productos)->with('referidos', $referidos);
  }
 
 
@@ -298,7 +301,7 @@ $ciudades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('departamentos','g
 ->get();
 
      
-return view('gestion::dashboard')->with('total_usuarios', $total_usuarios)->with('estado_usuario', $estado_usuario)->with('productos', $productos)->with('referidos', $referidos)->with('ciudades', $ciudades)->with('total_propuestas', $total_propuestas)->with('total_proceso', $total_proceso)->with('total_ganadas', $total_ganadas);
+return view('gestion::dashboard')->with('total_usuarios', $total_usuarios)->with('estado_usuario', $estado_usuario)->with('productos', $productos)->with('referidos', $referidos)->with('ciudades', $ciudades)->with('total_propuestas', $total_propuestas)->with('total_proceso', $total_proceso)->with('total_ganadas', $total_ganadas)->with('cantidades', $cantidades);
  }
 
  public function registro(){
@@ -359,8 +362,7 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  $productos =  Producto::whereIn('id', array('1,2'))->get();
  }
  }else{
- $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::leftjoin('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
- ->where('gestion_propuestas.gestion_usuario_id', '=', $id)
+ $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::where('gestion_propuestas.gestion_usuario_id', '=', $id)
  ->get();
 
  foreach($propuesta as $propuestas){
@@ -432,12 +434,14 @@ public function crearpropuesta($id){
 
  public function portafolio($id){
  if(!$this->tenantName){
- $empresa = Gestion::where('slug','=',$id)->get();
+ $empresa = Gestion::where('id','=',$id)->get();
  }else{
- $empresa = \DigitalsiteSaaS\Gestion\Tenant\Gestion::where('slug','=',$id)->get();
+ $empresa = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::leftjoin('gestion_usuarios','gestion_usuarios.id', '=','gestion_propuestas.gestion_usuario_id')->where('gestion_propuestas.id','=',$id)->get();
  }
  return view('gestion::portafolio', compact('empresa'));
 }
+
+
 
 public function editreferido($id){
  if(!$this->tenantName){

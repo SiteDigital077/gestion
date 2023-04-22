@@ -85,11 +85,15 @@
        
        <td class="text-center">{{$usuariosa->empresa}}</td>
        @if($usuariosa->tipo == '1')
-       <td class="text-center"> <span class="badge label-info">Contacto</span></td>
+       <td class="text-center"> <span class="badge label-info">Lead</span></td>
        @elseif($usuariosa->tipo == '2')
-       <td class="text-center"> <span class="badge label-warning">En Proceso</span></td>
+       <td class="text-center"> <span class="badge label-warning">Prospecto</span></td>
        @elseif($usuariosa->tipo == '3')
-       <td class="text-center"> <span class="badge label-success">Ganado</span></td>
+       <td class="text-center"> <span class="badge label-success">Cliente</span></td>
+       @elseif($usuariosa->tipo == '4')
+       <td class="text-center"> <span class="badge label-danger">Perdido</span></td>
+       @elseif($usuariosa->tipo == '5')
+       <td class="text-center"> <span class="badge label-dark">Sin Oportunidad</span></td>
        @endif
        <td>{{$usuariosa->email}}</td>
       

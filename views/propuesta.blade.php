@@ -83,7 +83,7 @@
     @foreach($propuesta as $propuesta)
 
       <tr>
-       <td class="text-center">{{$propuesta->fecha_presentacion}}</td>
+       <td class="text-center">{{$propuesta->fecha_presentacion}}{{$propuesta->id}}</td>
        
        <td class="text-center">
        
@@ -104,7 +104,7 @@
 
         
 
-        <a href="<?=URL::to('gestion/comercial/editar-propuesta/');?>/{{$propuesta->id}}"><span  id="tip" data-toggle="tooltip" data-placement="left" title="Editar usuario" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>
+        <a href="<?=URL::to('gestion/comercial/editar-propuesta/');?>"><span  id="tip" data-toggle="tooltip" data-placement="left" title="Editar usuario" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>
 
        <script language="JavaScript">
 		    function confirmar ( mensaje ) {
@@ -112,8 +112,9 @@
 	      </script>
 
        <a href="<?=URL::to('gestion/comercial/eliminar');?>/" onclick="return confirmar('¿Está seguro que desea eliminar el registro?')"><span id="tup" data-toggle="tooltip" data-placement="top" title="Eliminar usuario" class="btn btn-danger" disabled="true"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
+    
 
-       <a href="<?=URL::to('/portafolio');?>/"><span  id="tip" data-toggle="tooltip" data-placement="top" title="Ver Portafolio" class="btn btn-warning"><i class="fa fa-book sidebar-nav-icon"></i></span></a>
+<a href="<?=URL::to('/portafolio/');?>/{{$propuesta->id}}"><span  id="tip" data-toggle="tooltip" data-placement="top" title="Ver Portafolio" class="btn btn-warning"><i class="fa fa-book sidebar-nav-icon"></i></span></a>
 
        <a href="https://api.whatsapp.com/send?phone=+57&text=¿Hola cómo estás? 🖐 Bienvenido a Unión Soluciones, Mi nombre es Samuel Martinez 👦, voy a asesorarte el día de hoy.
 ¡Dime cómo puedo ayudarte!" target="_blank"><span  id="tip" data-toggle="tooltip" data-placement="right" title="Ver Portafolio" class="btn btn-success"><i class="fa fa-whatsapp sidebar-nav-icon"></i></span></a>
