@@ -56,7 +56,7 @@
 <div class="container">
 
 <div class="container-fluid">
-  <a href="/gestion/comercial/crear-propuesta/{{Request::segment(4)}}" class="btn btn-primary pull-right">Crear propuesta</a>
+  <a href="/gestion/comercial/crear-propuesta/{{Request::segment(4)}}?utm_referido={{ Request::get('utm_referido') }}" class="btn btn-primary pull-right">Crear propuesta</a>
  </div>
  <br>
  

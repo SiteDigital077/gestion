@@ -70,30 +70,19 @@
     </div>
 
 
-
-      
-                    
-                         
-
-
-
-
-
-
-
-
     <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-text-input">Producto de intéres</label>
-                                            <div class="col-md-9">
-                                                <div id="output"></div>
-                                                <select multiple="multiple" data-placeholder="Seleccione productos/servicios..." name="interes[]" multiple class="chosen-select form-control" id="interes">
-                                                 @foreach($productos as $productos)
+     <label class="col-md-3 control-label" for="example-text-input">Producto de intéres</label>
+      <div class="col-md-9">
+       <div id="output" hidden></div>
+        <select multiple="multiple" data-placeholder="Seleccione productos/servicios..." name="interes[]" multiple class="chosen-select form-control" id="interes">
+        @foreach($productos as $productos)
           <option value="{{$productos->id}}">{{$productos->producto}}</option>
-         @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+        @endforeach
+       </select>
+    </div>
+     </div>
 
+        {{Form::hidden('utm_referido',Request::get('utm_referido'), array('class' => 'form-control','readonly' => 'readonly','placeholder'=>'Ingrese fecha presentación'))}}
 
 
     <div class="form-group">

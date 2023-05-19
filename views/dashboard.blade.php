@@ -392,12 +392,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+                                         @foreach($medios as $medios)
                                         <tr>
-                                           <td style="width:280px"></td>
-                                           <td style="width:100px"></td>
+                                           <td style="width:280px">{{$medios->referido}}</td>
+                                           <td style="width:100px">$ {{number_format($medios->valor_propuesta,  0, ",", ".")}}</td>
                                         </tr>
-                                      
+                                      @endforeach
                                     </tbody>
                                 </table>
                             </div>

@@ -269,7 +269,7 @@ $productos = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_producto
 ->select('producto')
 ->selectRaw('count(producto) as productos_sum')
 ->groupBy('producto')
-->orderBy('producto', 'desc')
+->orderBy('productos_sum', 'desc')
 ->get();
 
 $sectores = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_sector','gestion_usuarios.sector_id','=','gestion_sector.id')
@@ -283,25 +283,34 @@ $referidos = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_referido
 ->select('referidos')
 ->selectRaw('count(referidos) as referidos_sum')
 ->groupBy('referidos')
-->orderBy('referidos', 'desc')
+->orderBy('referidos_sum', 'desc')
 ->get();
 
 $cantidades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_cantidad','gestion_usuarios.cantidad_id','=','gestion_cantidad.id')
 ->select('cantidad')
 ->selectRaw('count(cantidad) as cantidad_sum')
 ->groupBy('cantidad')
-->orderBy('cantidad', 'desc')
+->orderBy('cantidad_sum', 'desc')
 ->get();
 
 $ciudades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('departamentos','gestion_usuarios.ciudad_id','=','departamentos.id')
 ->select('departamento')
 ->selectRaw('count(departamento) as ciudad_sum')
 ->groupBy('departamento')
-->orderBy('departamento', 'desc')
+->orderBy('ciudad_sum', 'desc')
 ->get();
 
-     
-return view('gestion::dashboard')->with('total_usuarios', $total_usuarios)->with('estado_usuario', $estado_usuario)->with('productos', $productos)->with('referidos', $referidos)->with('ciudades', $ciudades)->with('total_propuestas', $total_propuestas)->with('total_proceso', $total_proceso)->with('total_ganadas', $total_ganadas)->with('cantidades', $cantidades);
+
+$medios = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::leftjoin('gestion_referidos','gestion_referidos.id','=','gestion_propuestas.referido_id')
+
+->select(DB::raw('sum(valor_propuesta) as valor_propuesta'),
+DB::raw('referidos as referido'))
+->orderBy('valor_propuesta', 'desc')
+->groupBy('gestion_referidos.id')
+->get();
+
+
+return view('gestion::dashboard')->with('total_usuarios', $total_usuarios)->with('estado_usuario', $estado_usuario)->with('productos', $productos)->with('referidos', $referidos)->with('ciudades', $ciudades)->with('total_propuestas', $total_propuestas)->with('total_proceso', $total_proceso)->with('total_ganadas', $total_ganadas)->with('cantidades', $cantidades)->with('medios', $medios);
  }
 
  public function registro(){
@@ -427,6 +436,7 @@ public function crearpropuesta($id){
   $gestion->fecha_presentacion = Input::get('fecha');
   $gestion->producto_servicio = Input::get('intereses');
   $gestion->observaciones = Input::get('comentarios');
+  $gestion->referido_id = Input::get('utm_referido');
   $gestion->gestion_usuario_id = Input::get('cliente');
   $gestion->save();
   return Redirect('/gestion/comercial')->with('status', 'ok_create');
