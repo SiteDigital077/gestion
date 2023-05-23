@@ -60,7 +60,6 @@ $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
   if(Input::get('fecha') == ''){
   $fecha = date('m/d/Y H:i');
   $mes_lead = date('M', strtotime($fecha));
-  dd($mes_lead);
   }else{
   $fecha = Input::get('fecha');
   $mes_lead = date('M', strtotime($fecha));
