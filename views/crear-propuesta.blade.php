@@ -63,9 +63,9 @@
     </div>
 
     <div class="form-group">
-     <label class="col-md-3 control-label" for="example-email-input">Fecha Presentación</label>
+     <label class="col-md-3 control-label" for="example-email-input">Fecha Presentación {{Request::get('utm_fecha')}}</label>
        <div class="col-md-9 date" id="datetimepicker7">
-        {{Form::text('fecha','', array('class' => 'form-control','readonly' => 'readonly','placeholder'=>'Ingrese fecha presentación'))}}
+        {{Form::text('fecha', Request::get('utm_fecha'), array('class' => 'form-control','readonly' => 'readonly','placeholder'=>'Ingrese fecha presentación'))}}
        </div>
     </div>
 

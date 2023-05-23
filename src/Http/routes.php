@@ -20,6 +20,7 @@ Route::post('gestion/comercial/editarpropuesta/{id}', 'DigitalsiteSaaS\Gestion\H
 Route::get('gestion/comercial/editar/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@edito');
 
 Route::get('gestion/comercial/editar-cantidades/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarcan');
+Route::get('gestion/comercial/editar-motivos/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarmot');
 
 Route::get('portafolio/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@portafolio');
 
@@ -34,6 +35,7 @@ Route::get('gestion/comercial/editar-producto/{id}', 'DigitalsiteSaaS\Gestion\Ht
 Route::get('gestion/comercial/editar-recepcion/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editrecepcion');
 
 Route::post('gestion/comercial/editarcantidad/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarcantidad');
+Route::post('gestion/comercial/editarmotivo/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarmotivo');
 Route::post('gestion/comercial/editarreferido/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarreferido');
 Route::post('gestion/comercial/editarsector/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarsector');
 Route::post('gestion/comercial/editarproducto/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarproducto');
@@ -50,13 +52,16 @@ Route::get('gestion/comercial/crear-producto', 'DigitalsiteSaaS\Gestion\Http\Ges
 Route::get('gestion/comercial/crear-sector', 'DigitalsiteSaaS\Gestion\Http\GestionController@crearsector');
 Route::get('gestion/comercial/crear-referido', 'DigitalsiteSaaS\Gestion\Http\GestionController@crearreferido');
 Route::get('gestion/comercial/crear-cantidad', 'DigitalsiteSaaS\Gestion\Http\GestionController@crearcantidad');
+Route::get('gestion/comercial/crear-motivo', 'DigitalsiteSaaS\Gestion\Http\GestionController@crearmotivo');
 Route::post('gestion/registrar/sector', 'DigitalsiteSaaS\Gestion\Http\GestionController@registrarsector');
 Route::post('gestion/registrar/referido', 'DigitalsiteSaaS\Gestion\Http\GestionController@registrarreferido');
 
 Route::post('gestion/registrar/producto', 'DigitalsiteSaaS\Gestion\Http\GestionController@registrarproductos');
 Route::post('gestion/registrar/cantidad', 'DigitalsiteSaaS\Gestion\Http\GestionController@registrarcantidad');
+Route::post('gestion/registrar/motivo', 'DigitalsiteSaaS\Gestion\Http\GestionController@registrarmotivo');
 Route::get('gestion/comercial/sectores', 'DigitalsiteSaaS\Gestion\Http\GestionController@sectores');
 Route::get('gestion/comercial/cantidades', 'DigitalsiteSaaS\Gestion\Http\GestionController@cantidades');
+Route::get('gestion/comercial/motivos', 'DigitalsiteSaaS\Gestion\Http\GestionController@motivos');
 Route::get('gestion/comercial/referidos', 'DigitalsiteSaaS\Gestion\Http\GestionController@referidos');
 Route::post('gestion/registrar/usuario', 'DigitalsiteSaaS\Gestion\Http\GestionController@create');
 Route::resource('gestion/comercial', 'DigitalsiteSaaS\Gestion\Http\GestionController');

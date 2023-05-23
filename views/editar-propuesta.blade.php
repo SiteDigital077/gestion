@@ -41,7 +41,8 @@
      </div>
      <h2><strong>Crear</strong> propuesta</h2>
     </div>
-    @foreach($propuesta as $propuesta)
+    @foreach($propuesta as $propuestas)
+     @endforeach   
     {{ Form::open(array('method' => 'POST','class' => 'form-horizontal','id' => 'defaultForm', 'url' => array('gestion/comercial/editarpropuesta',Request::segment(4)))) }}
 
 
@@ -56,6 +57,19 @@
       </div>
     </div>
 
+      <div class="form-group">
+     <label class="col-md-3 control-label" for="example-text-input">Motivo Perdida</label>
+      <div class="col-md-9">
+       <div id="output"></div>
+        <select data-placeholder="Seleccione" name="motivos" class="form-control" id="motivos">
+          <option value="" selected>Seleccione motivo de perdida</option>
+         @foreach($motivos as $motivo)
+          <option value="{{$motivo->id}}">{{$motivo->motivo}}</option>
+         @endforeach
+        </select>
+       </div>
+      </div>
+
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-email-input">Valor Propuesta</label>
        <div class="col-md-9">
@@ -69,12 +83,9 @@
         {{Form::text('fecha',$propuesta->fecha_presentacion, array('class' => 'form-control','readonly' => 'readonly','placeholder'=>'Ingrese fecha presentación'))}}
        </div>
     </div>
-
-
-
       
                     
-                          <div class="form-group">
+    <div class="form-group">
      <label class="col-md-3 control-label" for="example-text-input">Producto de intéres</label>
       <div class="col-md-9">
        <div id="output"></div>
@@ -110,7 +121,7 @@
     </div>
     
     {{ Form::close() }}
-     @endforeach                           
+                            
    </div>
   </div>
  </div>

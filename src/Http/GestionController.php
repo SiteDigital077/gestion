@@ -57,6 +57,14 @@ $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
 
  public function create() {
   $interes = Input::get('interes');
+  if(Input::get('fecha') == ''){
+  $fecha = date('m/d/Y H:i');
+  $mes_lead = date('M', strtotime($fecha));
+  dd($mes_lead);
+  }else{
+  $fecha = Input::get('fecha');
+  $mes_lead = date('M', strtotime($fecha));
+  }
   $data = json_encode($interes, true);
   $vowels = array('"', '[', ']');
   $onlyconsonants = str_replace($vowels, '', $data);
@@ -66,7 +74,8 @@ $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
   $gestion = new \DigitalsiteSaaS\Gestion\Tenant\Gestion;  
   }
   $gestion->tipo = Input::get('tipo');
-  $gestion->fecha = Input::get('fecha');
+  $gestion->fecha = $fecha;
+  $gestion->mes = $mes_lead;
   $gestion->valor = Input::get('valor');
   $gestion->nombre = Input::get('nombre');
   $gestion->apellido = Input::get('apellido');
@@ -174,6 +183,18 @@ public function editarusuario($id){
  }
 
 
+  public function registrarmotivo() {
+  if(!$this->tenantName){
+  $gestion = new Motivo;
+  }else{
+  $gestion = new \DigitalsiteSaaS\Gestion\Tenant\Motivo;  
+  }
+  $gestion->motivo = Input::get('motivo');
+  $gestion->save();
+  return Redirect('gestion/comercial/motivos')->with('status', 'ok_create');
+ }
+
+
 
 
 
@@ -211,6 +232,10 @@ public function crearreferido() {
   return view('gestion::crear-cantidad');
  }
 
+  public function crearmotivo() {
+  return view('gestion::crear-motivo');
+ }
+
  public function productos(){
   if(!$this->tenantName){
   $productos = Producto::all();
@@ -238,6 +263,16 @@ public function crearreferido() {
   return view('gestion::cantidades')->with('cantidades', $cantidades);
  }
 
+ public function motivos(){
+  if(!$this->tenantName){
+  $motivos = Motivo::all();
+  }else{
+  $motivos = \DigitalsiteSaaS\Gestion\Tenant\Motivo::all();
+  }
+  return view('gestion::motivos')->with('motivos', $motivos);
+ }
+
+
  public function referidos(){
   if(!$this->tenantName){
   $referidos = Referido::all();
@@ -253,55 +288,71 @@ public function crearreferido() {
 
  public function dashboard(){
 
+ $min_price = Input::has('min_price') ? Input::get('min_price') : 0;
+ $max_price = Input::has('max_price') ? Input::get('max_price') : 100000;
 
-$total_usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::count();
+$datoa = date('m/d/Y H:i', strtotime($min_price));
+$datob = date('m/d/Y H:i', strtotime($max_price));
+
+
+$total_usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))->count();
 
 $total_propuestas = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::sum('valor_propuesta');
 $total_proceso = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::where('estado_propuesta','=','1')->sum('valor_propuesta');
 $total_ganadas = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::where('estado_propuesta','=','3')->sum('valor_propuesta');
 
-$estado_usuario = \DigitalsiteSaaS\Gestion\Tenant\Gestion::select('tipo')
+$estado_usuario = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))
+->select('tipo')
 ->selectRaw('count(tipo) as tipo_sum')
 ->groupBy('tipo')
 ->get();
 
-$productos = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_productos','gestion_usuarios.interes','=','gestion_productos.id')
+
+$productos = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))
+->leftjoin('gestion_productos','gestion_usuarios.interes','=','gestion_productos.id')
 ->select('producto')
 ->selectRaw('count(producto) as productos_sum')
 ->groupBy('producto')
 ->orderBy('productos_sum', 'desc')
 ->get();
 
-$sectores = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_sector','gestion_usuarios.sector_id','=','gestion_sector.id')
+$sectores = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))
+->leftjoin('gestion_sector','gestion_usuarios.sector_id','=','gestion_sector.id')
 ->select('sectores')
 ->selectRaw('count(sectores) as sectores_sum')
 ->groupBy('sectores')
 ->orderBy('sectores', 'desc')
 ->get();
 
-$referidos = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_referidos','gestion_usuarios.sector_id','=','gestion_referidos.id')
+$referidos = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))->leftjoin('gestion_referidos','gestion_usuarios.sector_id','=','gestion_referidos.id')
 ->select('referidos')
 ->selectRaw('count(referidos) as referidos_sum')
 ->groupBy('referidos')
 ->orderBy('referidos_sum', 'desc')
 ->get();
 
-$cantidades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('gestion_cantidad','gestion_usuarios.cantidad_id','=','gestion_cantidad.id')
+$cantidades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))->leftjoin('gestion_cantidad','gestion_usuarios.cantidad_id','=','gestion_cantidad.id')
 ->select('cantidad')
 ->selectRaw('count(cantidad) as cantidad_sum')
 ->groupBy('cantidad')
 ->orderBy('cantidad_sum', 'desc')
 ->get();
 
-$ciudades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::leftjoin('departamentos','gestion_usuarios.ciudad_id','=','departamentos.id')
+$ciudades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))->leftjoin('departamentos','gestion_usuarios.ciudad_id','=','departamentos.id')
 ->select('departamento')
 ->selectRaw('count(departamento) as ciudad_sum')
 ->groupBy('departamento')
 ->orderBy('ciudad_sum', 'desc')
 ->get();
 
+$meses_lead = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))
+->groupBy(date('M', strtotime('fecha')))
+->count();
+dd($meses_lead);
+$total_usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))->count();
 
-$medios = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::leftjoin('gestion_referidos','gestion_referidos.id','=','gestion_propuestas.referido_id')
+
+$medios = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::whereBetween('fecha_presentacion', array($datoa, $datob))->leftjoin('gestion_referidos','gestion_referidos.id','=','gestion_propuestas.referido_id')
 
 ->select(DB::raw('sum(valor_propuesta) as valor_propuesta'),
 DB::raw('referidos as referido'))
@@ -360,6 +411,15 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  return view('gestion::editar-cantidad')->with('cantidad', $cantidad);
 }
 
+ public function editarmot($id){
+ if(!$this->tenantName){
+ $motivo = Motivo::where('id', '=', $id)->get();
+ }else{
+ $motivo = \DigitalsiteSaaS\Gestion\Tenant\Motivo::where('id', '=', $id)->get();
+ }
+ return view('gestion::editar-motivo')->with('motivo', $motivo);
+}
+
  public function propuesta($id){
  if(!$this->tenantName){
  $propuesta = Propuesta::leftjoin('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
@@ -388,7 +448,6 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  public function editarpropuesta($id){
  if(!$this->tenantName){
  $propuesta = Propuesta::leftjoin('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
- ->whereIn('gestion_propuestas.gestion_usuario_id', '=', $id)
  ->get();
 
  $intereses = Gestion::where('id','=',$id)->get();
@@ -397,22 +456,27 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  $id_str = explode(',', $ideman);
  $productosa = Producto::whereIn('id', $id_str)->get();
  $productos = Producto::whereNotIn('id',$id_str)->get();
+
  }
  }else{
- $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::lefjoin('gestion_productos','gestion_propuestas.producto_servicio','=','gestion_productos.id')
- ->where('gestion_propuestas.gestion_usuario_id', '=', $id)
+ $motivos = \DigitalsiteSaaS\Gestion\Tenant\Motivo::all();
+ $propuesta = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::where('id','=',$id)
  ->get();
 
-$intereses = \DigitalsiteSaaS\Gestion\Tenant\Gestion::where('id','=',$id)->get();
- foreach ($intereses as $interes){
+ foreach ($propuesta as $propuesta){
+
+ $intereses = \DigitalsiteSaaS\Gestion\Tenant\Gestion::where('id','=',$propuesta->gestion_usuario_id)->get();
+ }
+
+ foreach ($intereses as $interes)
  $ideman = $interes->interes;
  $id_str = explode(',', $ideman);
  $productosa = \DigitalsiteSaaS\Gestion\Tenant\Producto::whereIn('id', $id_str)->get();
  $productos = \DigitalsiteSaaS\Gestion\Tenant\Producto::whereNotIn('id',$id_str)->get();
- }
+
  }
 
- return view('gestion::editar-propuesta')->with('propuesta', $propuesta)->with('productos', $productos)->with('productos', $productos)->with('productosa', $productosa);
+ return view('gestion::editar-propuesta')->with('propuesta', $propuesta)->with('productos', $productos)->with('productosa', $productosa)->with('motivos', $motivos);
 }
 
 
@@ -607,6 +671,18 @@ public function editrecepcion($id){
   $gestion->cantidad = Input::get('cantidad');
   $gestion->save();
   return Redirect('/gestion/comercial/cantidades')->with('status', 'ok_update');
+ }
+
+
+  public function editarmotivo($id){
+  if(!$this->tenantName){
+  $gestion = Motivo::find($id);
+  }else{
+  $gestion = \DigitalsiteSaaS\Gestion\Tenant\Motivo::find($id);
+  }    
+  $gestion->motivo = Input::get('motivo');
+  $gestion->save();
+  return Redirect('/gestion/comercial/motivos')->with('status', 'ok_update');
  }
 
   public function editarpropuestaa($id){

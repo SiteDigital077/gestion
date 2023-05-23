@@ -56,7 +56,7 @@
 <div class="container">
 
 <div class="container-fluid">
-  <a href="/gestion/comercial/crear-propuesta/{{Request::segment(4)}}?utm_referido={{ Request::get('utm_referido') }}" class="btn btn-primary pull-right">Crear propuesta</a>
+  <a href="/gestion/comercial/crear-propuesta/{{Request::segment(4)}}?utm_referido={{ Request::get('utm_referido') }}&utm_fecha={{ Request::get('utm_fecha') }}" class="btn btn-primary pull-right">Crear propuesta</a>
  </div>
  <br>
  
@@ -104,15 +104,17 @@
 
         
 
-        <a href="<?=URL::to('gestion/comercial/editar-propuesta/');?>"><span  id="tip" data-toggle="tooltip" data-placement="left" title="Editar usuario" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>
+        <a href="<?=URL::to('gestion/comercial/editar-propuesta/');?>/{{$propuesta->id}}"><span  id="tip" data-toggle="tooltip" data-placement="left" title="Editar propuesta" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>
 
        <script language="JavaScript">
 		    function confirmar ( mensaje ) {
 		    return confirm( mensaje );}
 	      </script>
 
+
+<!--
        <a href="<?=URL::to('gestion/comercial/eliminar');?>/" onclick="return confirmar('¿Está seguro que desea eliminar el registro?')"><span id="tup" data-toggle="tooltip" data-placement="top" title="Eliminar usuario" class="btn btn-danger" disabled="true"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
-    
+    -->
 
 <a href="<?=URL::to('/portafolio/');?>/{{$propuesta->id}}"><span  id="tip" data-toggle="tooltip" data-placement="top" title="Ver Portafolio" class="btn btn-warning"><i class="fa fa-book sidebar-nav-icon"></i></span></a>
 
