@@ -346,9 +346,11 @@ $ciudades = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array
 ->get();
 
 $meses_lead = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))
-->groupBy(date('M', strtotime('fecha')))
+->groupBy('mes')
 ->count();
-dd($meses_lead);
+
+
+
 $total_usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))->count();
 
 
