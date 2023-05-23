@@ -297,9 +297,14 @@ $datob = date('m/d/Y H:i', strtotime($max_price));
 
 $total_usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))->count();
 
-$total_propuestas = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::sum('valor_propuesta');
-$total_proceso = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::where('estado_propuesta','=','1')->sum('valor_propuesta');
-$total_ganadas = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::where('estado_propuesta','=','3')->sum('valor_propuesta');
+$total_propuestas = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::whereBetween('fecha_presentacion', array($datoa, $datob))
+->sum('valor_propuesta');
+
+$total_proceso = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::whereBetween('fecha_presentacion', array($datoa, $datob))
+->where('estado_propuesta','=','1')->sum('valor_propuesta');
+
+$total_ganadas = \DigitalsiteSaaS\Gestion\Tenant\Propuesta::whereBetween('fecha_presentacion', array($datoa, $datob))
+->where('estado_propuesta','=','3')->sum('valor_propuesta');
 
 $estado_usuario = \DigitalsiteSaaS\Gestion\Tenant\Gestion::whereBetween('fecha', array($datoa, $datob))
 ->select('tipo')
